@@ -1,1284 +1,350 @@
 <!DOCTYPE html>
 <html lang="az">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>corp-bridge</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --blue: #2563EB;
-      --blue-light: #EFF6FF;
-      --dark: #0F172A;
-      --gray: #64748B;
-      --gray-light: #F8FAFC;
-      --gray-border: #E2E8F0;
-      --white: #fff;
-      --green: #22C55E;
-      --radius: 12px;
+      --blue: #2563EB; --blue-light: #EFF6FF; --dark: #0F172A;
+      --gray: #64748B; --gray-light: #F8FAFC; --gray-border: #E2E8F0;
+      --white: #fff; --green: #22C55E; --radius: 12px;
     }
+    body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); font-size: 15px; line-height: 1.6; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      color: var(--dark);
-      background: var(--white);
-      font-size: 15px;
-      line-height: 1.6;
+    /* ANNOUNCEMENT */
+    .announcement-bar {
+      width: 100%; background: #e42107; color: #fff;
+      text-align: center; padding: 10px 20px; font-size: 13px; line-height: 1.5;
     }
+    .announcement-bar a { color: #93c5fd; text-decoration: none; font-weight: 600; }
+    .announcement-bar a:hover { text-decoration: underline; }
 
     /* LANG BAR */
     .lang-bar {
-      background: var(--dark);
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 6px 64px;
-      gap: 6px;
+      background: var(--dark); display: flex; justify-content: flex-end;
+      align-items: center; padding: 6px 64px; gap: 6px;
     }
-
     .lang-btn {
-      background: transparent;
-      border: 1.5px solid rgba(255, 255, 255, .25);
-      color: rgba(255, 255, 255, .65);
-      padding: 4px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all .2s;
-      letter-spacing: .06em;
+      background: transparent; border: 1.5px solid rgba(255,255,255,.25);
+      color: rgba(255,255,255,.65); padding: 4px 14px; border-radius: 6px;
+      font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit;
+      transition: all .2s; letter-spacing: .06em;
     }
-
-    .lang-btn.active {
-      background: var(--blue);
-      border-color: var(--blue);
-      color: #fff;
-    }
-
-    .lang-btn:hover:not(.active) {
-      border-color: rgba(255, 255, 255, .55);
-      color: #fff;
-    }
+    .lang-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .lang-btn:hover:not(.active) { border-color: rgba(255,255,255,.55); color: #fff; }
 
     /* NAV */
     nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 64px;
-      height: 68px;
-      border-bottom: 1px solid var(--gray-border);
-      position: sticky;
-      top: 0;
-      background: white;
-      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 64px; height: 68px; border-bottom: 1px solid var(--gray-border);
+      position: sticky; top: 0; background: white; z-index: 100;
     }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 20px; color: var(--blue); text-decoration: none; }
+    .logo-icon { width: 34px; height: 34px; background: var(--blue); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { fill: white; }
+    .nav-links { display: flex; list-style: none; gap: 32px; }
+    .nav-links a { text-decoration: none; color: var(--dark); font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--blue); }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 20px;
-      color: var(--blue);
-      text-decoration: none;
+    /* HAMBURGER */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; }
+    .hamburger span { width: 24px; height: 2px; background: var(--dark); border-radius: 2px; transition: all .3s; display: block; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: white; z-index: 200; flex-direction: column;
+      padding: 24px 24px 40px; overflow-y: auto;
     }
-
-    .logo-icon {
-      width: 34px;
-      height: 34px;
-      background: var(--blue);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .logo-icon svg {
-      fill: white;
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 32px;
-    }
-
-    nav ul a {
-      text-decoration: none;
-      color: var(--dark);
-      font-size: 14px;
-      font-weight: 500;
+    .mobile-menu.open { display: flex; }
+    .mobile-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+    .mobile-menu-close { background: none; border: none; font-size: 28px; cursor: pointer; color: var(--dark); line-height: 1; }
+    .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .mobile-menu ul li a {
+      display: block; padding: 14px 0; font-size: 18px; font-weight: 600;
+      color: var(--dark); text-decoration: none; border-bottom: 1px solid var(--gray-border);
       transition: color .2s;
     }
-
-    nav ul a:hover {
-      color: var(--blue);
+    .mobile-menu ul li a:hover { color: var(--blue); }
+    .mobile-menu-lang { display: flex; gap: 8px; margin-top: 32px; }
+    .mobile-lang-btn {
+      flex: 1; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: all .2s;
+      border: 1.5px solid var(--gray-border); background: white; color: var(--dark);
     }
+    .mobile-lang-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
 
     /* HERO */
-    .hero {
-      display: flex;
-      align-items: center;
-      padding: 80px 64px 60px;
-      gap: 60px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .hero-left {
-      flex: 1;
-      max-width: 500px;
-    }
-
-    .hero-left h1 {
-      font-size: 42px;
-      font-weight: 800;
-      line-height: 1.2;
-      color: var(--dark);
-      margin-bottom: 20px;
-    }
-
-    .hero-left>p {
-      color: var(--gray);
-      font-size: 15px;
-      margin-bottom: 28px;
-      line-height: 1.7;
-    }
-
-    .hero-checklist {
-      list-style: none;
-      margin-bottom: 36px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .hero-checklist li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .check-icon {
-      width: 20px;
-      height: 20px;
-      background: var(--blue);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .check-icon svg {
-      stroke: white;
-      width: 11px;
-      height: 11px;
-    }
-
-    .hero-cta {
-      margin-bottom: 28px;
-    }
-
-    .hero-cta a {
-      background: var(--blue);
-      color: white;
-      padding: 14px 28px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: background .2s;
-    }
-
-    .hero-cta a:hover {
-      background: #1D4ED8;
-    }
-
-    .store-note {
-      font-size: 13px;
-      color: var(--gray);
-      margin-bottom: 10px;
-    }
-
-    .store-icons {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .store-icon {
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--gray-border);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: border-color .2s;
-    }
-
-    .store-icon:hover {
-      border-color: var(--blue);
-    }
-
-    .hero-right {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      min-height: 480px;
-    }
+    .hero { display: flex; align-items: center; padding: 80px 64px 60px; gap: 60px; max-width: 1280px; margin: 0 auto; }
+    .hero-left { flex: 1; max-width: 500px; }
+    .hero-left h1 { font-size: 42px; font-weight: 800; line-height: 1.2; color: var(--dark); margin-bottom: 20px; }
+    .hero-left > p { color: var(--gray); font-size: 15px; margin-bottom: 28px; line-height: 1.7; }
+    .hero-checklist { list-style: none; margin-bottom: 36px; display: flex; flex-direction: column; gap: 10px; }
+    .hero-checklist li { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
+    .check-icon { width: 20px; height: 20px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .check-icon svg { stroke: white; width: 11px; height: 11px; }
+    .hero-cta { margin-bottom: 28px; }
+    .hero-cta a { background: var(--blue); color: white; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background .2s; }
+    .hero-cta a:hover { background: #1D4ED8; }
+    .store-note { font-size: 13px; color: var(--gray); margin-bottom: 10px; }
+    .store-icons { display: flex; gap: 14px; align-items: center; }
+    .store-icon { width: 36px; height: 36px; border: 1px solid var(--gray-border); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s; }
+    .store-icon:hover { border-color: var(--blue); }
+    .hero-right { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; min-height: 480px; }
 
     /* PHONES */
-    .phone-mockup {
-      background: #0F172A;
-      border-radius: 36px;
-      padding: 10px;
-      box-shadow: 0 30px 80px rgba(37, 99, 235, .18);
-      width: 220px;
-      overflow: hidden;
-      position: relative;
-      z-index: 2;
-    }
-
-    .phone-screen {
-      background: white;
-      border-radius: 28px;
-      overflow: hidden;
-      min-height: 400px;
-    }
-
-    .phone-notch {
-      background: #0F172A;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .phone-notch-bar {
-      width: 70px;
-      height: 6px;
-      background: #1E293B;
-      border-radius: 3px;
-    }
-
-    .phone-status {
-      background: white;
-      padding: 8px 14px 4px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 9px;
-      font-weight: 600;
-    }
-
-    .phone-header {
-      padding: 6px 14px 8px;
-      border-bottom: 1px solid var(--gray-border);
-    }
-
-    .phone-header h4 {
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .phone-search {
-      margin: 8px 14px;
-      background: var(--gray-light);
-      border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 10px;
-      color: var(--gray);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .phone-tabs-row {
-      display: flex;
-      padding: 0 14px;
-      border-bottom: 1px solid var(--gray-border);
-      margin-bottom: 8px;
-    }
-
-    .phone-tab {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 6px 10px;
-      color: var(--gray);
-      border-bottom: 2px solid transparent;
-    }
-
-    .phone-tab.active {
-      color: var(--blue);
-      border-bottom-color: var(--blue);
-    }
-
-    .phone-cats {
-      display: flex;
-      gap: 8px;
-      padding: 0 14px 8px;
-    }
-
-    .phone-cat {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      font-size: 8px;
-      color: var(--gray);
-    }
-
-    .phone-cat-icon {
-      width: 28px;
-      height: 28px;
-      background: var(--blue-light);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .phone-section-label {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 4px 14px;
-    }
-
-    .phone-product {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-bottom: 1px solid #F1F5F9;
-    }
-
-    .phone-product-img {
-      width: 38px;
-      height: 38px;
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
-
-    .phone-product-name {
-      font-size: 9px;
-      font-weight: 600;
-      line-height: 1.3;
-    }
-
-    .phone-product-price {
-      font-size: 9px;
-      color: var(--blue);
-      font-weight: 700;
-    }
-
-    .phone-more {
-      padding: 6px 14px;
-      font-size: 10px;
-      color: var(--blue);
-      font-weight: 600;
-    }
-
-    .phone-mockup-2 {
-      position: absolute;
-      right: -20px;
-      top: 30px;
-      background: #0F172A;
-      border-radius: 32px;
-      padding: 9px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, .15);
-      width: 190px;
-      z-index: 1;
-      opacity: .9;
-    }
-
-    .msg-screen {
-      background: white;
-      border-radius: 24px;
-      overflow: hidden;
-      min-height: 340px;
-    }
-
-    .msg-contact {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--gray-border);
-    }
-
-    .msg-avatar {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #60A5FA, #2563EB);
-      flex-shrink: 0;
-    }
-
-    .msg-name-text {
-      font-weight: 700;
-      font-size: 9px;
-    }
-
-    .msg-status-text {
-      font-size: 8px;
-      color: var(--green);
-    }
-
-    .msg-bubble {
-      margin: 8px 12px;
-      padding: 6px 10px;
-      border-radius: 10px;
-      font-size: 8.5px;
-      line-height: 1.5;
-      max-width: 90%;
-    }
-
-    .msg-bubble.inc {
-      background: var(--gray-light);
-      border-bottom-left-radius: 3px;
-    }
-
-    .msg-bubble.out {
-      background: var(--blue);
-      color: white;
-      margin-left: auto;
-      border-bottom-right-radius: 3px;
-    }
-
-    .msg-file {
-      background: var(--gray-light);
-      border-radius: 8px;
-      padding: 6px 10px;
-      margin: 4px 12px 4px auto;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 8px;
-      max-width: 80%;
-    }
-
-    .msg-input {
-      margin: 8px 12px;
-      background: var(--gray-light);
-      border-radius: 20px;
-      padding: 6px 10px;
-      font-size: 8.5px;
-      color: var(--gray);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .float-card {
-      position: absolute;
-      left: -10px;
-      bottom: 40px;
-      background: white;
-      border-radius: 12px;
-      padding: 10px 14px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, .12);
-      z-index: 10;
-    }
-
-    .float-card strong {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--blue);
-      display: block;
-    }
-
-    .float-card span {
-      font-size: 10px;
-      color: var(--gray);
-    }
+    .phone-mockup { background: #0F172A; border-radius: 36px; padding: 10px; box-shadow: 0 30px 80px rgba(37,99,235,.18); width: 220px; overflow: hidden; position: relative; z-index: 2; }
+    .phone-screen { background: white; border-radius: 28px; overflow: hidden; min-height: 400px; }
+    .phone-notch { background: #0F172A; height: 24px; display: flex; align-items: center; justify-content: center; }
+    .phone-notch-bar { width: 70px; height: 6px; background: #1E293B; border-radius: 3px; }
+    .phone-status { background: white; padding: 8px 14px 4px; display: flex; justify-content: space-between; font-size: 9px; font-weight: 600; }
+    .phone-header { padding: 6px 14px 8px; border-bottom: 1px solid var(--gray-border); }
+    .phone-header h4 { font-size: 13px; font-weight: 700; }
+    .phone-search { margin: 8px 14px; background: var(--gray-light); border-radius: 6px; padding: 6px 10px; font-size: 10px; color: var(--gray); display: flex; align-items: center; gap: 6px; }
+    .phone-tabs-row { display: flex; padding: 0 14px; border-bottom: 1px solid var(--gray-border); margin-bottom: 8px; }
+    .phone-tab { font-size: 10px; font-weight: 600; padding: 6px 10px; color: var(--gray); border-bottom: 2px solid transparent; }
+    .phone-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+    .phone-cats { display: flex; gap: 8px; padding: 0 14px 8px; }
+    .phone-cat { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 8px; color: var(--gray); }
+    .phone-cat-icon { width: 28px; height: 28px; background: var(--blue-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .phone-section-label { font-size: 10px; font-weight: 700; padding: 4px 14px; }
+    .phone-product { display: flex; align-items: center; gap: 8px; padding: 6px 14px; border-bottom: 1px solid #F1F5F9; }
+    .phone-product-img { width: 38px; height: 38px; border-radius: 6px; flex-shrink: 0; }
+    .phone-product-name { font-size: 9px; font-weight: 600; line-height: 1.3; }
+    .phone-product-price { font-size: 9px; color: var(--blue); font-weight: 700; }
+    .phone-more { padding: 6px 14px; font-size: 10px; color: var(--blue); font-weight: 600; }
+    .phone-mockup-2 { position: absolute; right: -20px; top: 30px; background: #0F172A; border-radius: 32px; padding: 9px; box-shadow: 0 20px 60px rgba(0,0,0,.15); width: 190px; z-index: 1; opacity: .9; }
+    .msg-screen { background: white; border-radius: 24px; overflow: hidden; min-height: 340px; }
+    .msg-contact { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--gray-border); }
+    .msg-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#60A5FA,#2563EB); flex-shrink: 0; }
+    .msg-name-text { font-weight: 700; font-size: 9px; }
+    .msg-status-text { font-size: 8px; color: var(--green); }
+    .msg-bubble { margin: 8px 12px; padding: 6px 10px; border-radius: 10px; font-size: 8.5px; line-height: 1.5; max-width: 90%; }
+    .msg-bubble.inc { background: var(--gray-light); border-bottom-left-radius: 3px; }
+    .msg-bubble.out { background: var(--blue); color: white; margin-left: auto; border-bottom-right-radius: 3px; }
+    .msg-file { background: var(--gray-light); border-radius: 8px; padding: 6px 10px; margin: 4px 12px 4px auto; display: flex; align-items: center; gap: 6px; font-size: 8px; max-width: 80%; }
+    .msg-input { margin: 8px 12px; background: var(--gray-light); border-radius: 20px; padding: 6px 10px; font-size: 8.5px; color: var(--gray); display: flex; justify-content: space-between; align-items: center; }
 
     /* SECTIONS */
-    section {
-      padding: 80px 64px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    h2 {
-      text-align: center;
-      font-size: 34px;
-      font-weight: 800;
-      color: var(--dark);
-      margin-bottom: 56px;
-    }
+    section { padding: 80px 64px; max-width: 1280px; margin: 0 auto; }
+    h2 { text-align: center; font-size: 34px; font-weight: 800; color: var(--dark); margin-bottom: 56px; }
 
     /* FEATURES */
-    .features-bg {
-      background: var(--gray-light);
-      padding: 80px 0;
-    }
-
-    .features-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 64px;
-    }
-
-    .features-inner h2 {
-      margin-bottom: 56px;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 32px;
-    }
-
-    .feature-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 12px;
-    }
-
-    .feature-icon {
-      width: 60px;
-      height: 60px;
-      background: var(--blue-light);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .feature-icon svg {
-      stroke: var(--blue);
-      width: 28px;
-      height: 28px;
-      fill: none;
-      stroke-width: 1.8;
-    }
-
-    .feature-card h3 {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .feature-card p {
-      font-size: 12.5px;
-      color: var(--gray);
-      line-height: 1.55;
-    }
+    .features-bg { background: var(--gray-light); padding: 80px 0; }
+    .features-inner { max-width: 1280px; margin: 0 auto; padding: 0 64px; }
+    .features-inner h2 { margin-bottom: 56px; }
+    .features-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 32px; }
+    .feature-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+    .feature-icon { width: 60px; height: 60px; background: var(--blue-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+    .feature-icon svg { stroke: var(--blue); width: 28px; height: 28px; fill: none; stroke-width: 1.8; }
+    .feature-card h3 { font-size: 14px; font-weight: 700; }
+    .feature-card p { font-size: 12.5px; color: var(--gray); line-height: 1.55; }
 
     /* STEPS */
-    .steps-section h2 {
-      margin-bottom: 56px;
-    }
-
-    .steps-grid {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-    }
-
-    .step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      width: 160px;
-      flex-shrink: 0;
-    }
-
-    .step-num {
-      width: 42px;
-      height: 42px;
-      background: var(--blue);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 16px;
-      margin-bottom: 16px;
-    }
-
-    .step-icon-wrap {
-      width: 64px;
-      height: 64px;
-      background: var(--blue-light);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
-    }
-
-    .step-icon-wrap svg {
-      stroke: var(--blue);
-      width: 30px;
-      height: 30px;
-      fill: none;
-      stroke-width: 1.8;
-    }
-
-    .step h4 {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .step p {
-      font-size: 11.5px;
-      color: var(--gray);
-      line-height: 1.5;
-    }
-
-    .step-arrow {
-      display: flex;
-      align-items: center;
-      margin-top: 56px;
-      color: var(--blue);
-      font-size: 22px;
-      padding: 0 4px;
-    }
+    .steps-section h2 { margin-bottom: 56px; }
+    .steps-grid { display: flex; align-items: flex-start; justify-content: center; flex-wrap: nowrap; }
+    .step { display: flex; flex-direction: column; align-items: center; text-align: center; width: 160px; flex-shrink: 0; }
+    .step-num { width: 42px; height: 42px; background: var(--blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; margin-bottom: 16px; }
+    .step-icon-wrap { width: 64px; height: 64px; background: var(--blue-light); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .step-icon-wrap svg { stroke: var(--blue); width: 30px; height: 30px; fill: none; stroke-width: 1.8; }
+    .step h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .step p { font-size: 11.5px; color: var(--gray); line-height: 1.5; }
+    .step-arrow { display: flex; align-items: center; margin-top: 56px; color: var(--blue); font-size: 22px; padding: 0 4px; flex-shrink: 0; }
 
     /* PREVIEW */
-    .preview-bg {
-      background: var(--gray-light);
-      padding: 80px 0;
-    }
-
-    .preview-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 64px;
-    }
-
-    .preview-inner h2 {
-      margin-bottom: 40px;
-    }
-
-    .preview-cards {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 20px;
-    }
-
-    .preview-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: 0 2px 16px rgba(0, 0, 0, .06);
-    }
-
-    .preview-card h4 {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--gray-border);
-    }
-
-    .co-avatar {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #93C5FD, #2563EB);
-      border-radius: 10px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    .co-name {
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .co-rating {
-      font-size: 12px;
-      color: #F59E0B;
-      margin: 2px 0;
-    }
-
-    .co-loc {
-      font-size: 11px;
-      color: var(--gray);
-      margin-bottom: 10px;
-    }
-
-    .co-desc {
-      font-size: 11px;
-      color: var(--gray);
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-
-    .co-label {
-      font-size: 10px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .co-sub {
-      font-size: 10px;
-      color: var(--gray);
-      margin-bottom: 10px;
-    }
-
-    .co-link {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--blue);
-      text-decoration: none;
-    }
-
-    .mkt-search {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--gray-light);
-      border-radius: 6px;
-      padding: 6px 10px;
-      margin-bottom: 10px;
-      font-size: 11px;
-      color: var(--gray);
-    }
-
-    .mkt-tabs {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .mkt-tab {
-      padding: 4px 10px;
-      border-radius: 14px;
-      font-size: 11px;
-      font-weight: 600;
-      background: var(--blue);
-      color: white;
-      cursor: pointer;
-    }
-
-    .mkt-tab.g {
-      background: var(--gray-light);
-      color: var(--gray);
-    }
-
-    .mkt-item {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--gray-border);
-    }
-
-    .mkt-item:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-    }
-
-    .mkt-img {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      flex-shrink: 0;
-    }
-
-    .mkt-name {
-      font-size: 11px;
-      font-weight: 600;
-      margin-bottom: 3px;
-    }
-
-    .mkt-price {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--blue);
-    }
-
-    .mkt-unit {
-      font-size: 10px;
-      color: var(--gray);
-    }
-
-    .rfq-lbl {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--gray);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-    }
-
-    .rfq-val {
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-
-    .rfq-btn {
-      background: var(--blue);
-      color: white;
-      border: none;
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 13px;
-      cursor: pointer;
-      margin-top: 8px;
-      font-family: inherit;
-    }
-
-    .ml-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--gray-border);
-    }
-
-    .ml-item:last-child {
-      border-bottom: none;
-    }
-
-    .ml-av {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #93C5FD, #2563EB);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      color: white;
-    }
-
-    .ml-name {
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .ml-prev {
-      font-size: 10px;
-      color: var(--gray);
-    }
-
-    .ml-time {
-      font-size: 10px;
-      color: var(--gray);
-      margin-left: auto;
-      white-space: nowrap;
-    }
-
-    .odot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      margin-left: 4px;
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    .doc-cat-row {
-      font-size: 11px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .doc-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--gray-border);
-    }
-
-    .doc-item:last-of-type {
-      border-bottom: none;
-    }
-
-    .doc-ico {
-      width: 30px;
-      height: 30px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-
-    .doc-ico.bl {
-      background: #DBEAFE;
-    }
-
-    .doc-ico.gr {
-      background: #DCFCE7;
-    }
-
-    .doc-ico.or {
-      background: #FEF3C7;
-    }
-
-    .doc-ico.pu {
-      background: #F3E8FF;
-    }
-
-    .doc-iname {
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    .doc-icount {
-      font-size: 10px;
-      color: var(--gray);
-    }
-
-    .doc-btn {
-      border: 1.5px solid var(--blue);
-      color: var(--blue);
-      background: none;
-      width: 100%;
-      padding: 8px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 12px;
-      cursor: pointer;
-      margin-top: 14px;
-      font-family: inherit;
-    }
+    .preview-bg { background: var(--gray-light); padding: 80px 0; }
+    .preview-inner { max-width: 1280px; margin: 0 auto; padding: 0 64px; }
+    .preview-inner h2 { margin-bottom: 40px; }
+    .preview-cards { display: grid; grid-template-columns: repeat(5,1fr); gap: 20px; }
+    .preview-card { background: white; border-radius: var(--radius); padding: 20px; box-shadow: 0 2px 16px rgba(0,0,0,.06); }
+    .preview-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--gray-border); }
+    .co-avatar { width: 48px; height: 48px; background: linear-gradient(135deg,#93C5FD,#2563EB); border-radius: 10px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .co-name { font-size: 13px; font-weight: 700; }
+    .co-rating { font-size: 12px; color: #F59E0B; margin: 2px 0; }
+    .co-loc { font-size: 11px; color: var(--gray); margin-bottom: 10px; }
+    .co-desc { font-size: 11px; color: var(--gray); line-height: 1.5; margin-bottom: 12px; }
+    .co-label { font-size: 10px; font-weight: 700; margin-bottom: 4px; }
+    .co-sub { font-size: 10px; color: var(--gray); margin-bottom: 10px; }
+    .co-link { font-size: 11px; font-weight: 600; color: var(--blue); text-decoration: none; }
+    .mkt-search { display: flex; align-items: center; gap: 6px; background: var(--gray-light); border-radius: 6px; padding: 6px 10px; margin-bottom: 10px; font-size: 11px; color: var(--gray); }
+    .mkt-tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+    .mkt-tab { padding: 4px 10px; border-radius: 14px; font-size: 11px; font-weight: 600; background: var(--blue); color: white; cursor: pointer; }
+    .mkt-tab.g { background: var(--gray-light); color: var(--gray); }
+    .mkt-item { display: flex; gap: 10px; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--gray-border); }
+    .mkt-item:last-child { border-bottom: none; margin-bottom: 0; }
+    .mkt-img { width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0; }
+    .mkt-name { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
+    .mkt-price { font-size: 11px; font-weight: 700; color: var(--blue); }
+    .mkt-unit { font-size: 10px; color: var(--gray); }
+    .rfq-lbl { font-size: 10px; font-weight: 600; color: var(--gray); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .05em; }
+    .rfq-val { font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+    .rfq-btn { background: var(--blue); color: white; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; margin-top: 8px; font-family: inherit; }
+    .ml-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--gray-border); }
+    .ml-item:last-child { border-bottom: none; }
+    .ml-av { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#93C5FD,#2563EB); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: white; }
+    .ml-name { font-size: 12px; font-weight: 600; }
+    .ml-prev { font-size: 10px; color: var(--gray); }
+    .ml-time { font-size: 10px; color: var(--gray); margin-left: auto; white-space: nowrap; }
+    .odot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); margin-left: 4px; display: inline-block; vertical-align: middle; }
+    .doc-cat-row { font-size: 11px; font-weight: 700; margin-bottom: 10px; display: flex; justify-content: space-between; }
+    .doc-item { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--gray-border); }
+    .doc-item:last-of-type { border-bottom: none; }
+    .doc-ico { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .doc-ico.bl { background: #DBEAFE; } .doc-ico.gr { background: #DCFCE7; } .doc-ico.or { background: #FEF3C7; } .doc-ico.pu { background: #F3E8FF; }
+    .doc-iname { font-size: 11px; font-weight: 600; }
+    .doc-icount { font-size: 10px; color: var(--gray); }
+    .doc-btn { border: 1.5px solid var(--blue); color: var(--blue); background: none; width: 100%; padding: 8px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; margin-top: 14px; font-family: inherit; }
 
     /* AUDIENCE */
-    .audience-section h2 {
-      margin-bottom: 56px;
-    }
-
-    .audience-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 24px;
-    }
-
-    .audience-card {
-      background: white;
-      border: 1.5px solid var(--gray-border);
-      border-radius: var(--radius);
-      padding: 28px 20px;
-      text-align: center;
-      transition: border-color .2s, box-shadow .2s;
-      cursor: pointer;
-    }
-
-    .audience-card:hover {
-      border-color: var(--blue);
-      box-shadow: 0 4px 20px rgba(37, 99, 235, .1);
-    }
-
-    .audience-icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 14px;
-      background: var(--blue-light);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .audience-icon svg {
-      stroke: var(--blue);
-      width: 26px;
-      height: 26px;
-      fill: none;
-      stroke-width: 1.8;
-    }
-
-    .audience-card h3 {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .audience-card p {
-      font-size: 11.5px;
-      color: var(--gray);
-      line-height: 1.5;
-    }
+    .audience-section h2 { margin-bottom: 56px; }
+    .audience-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 24px; }
+    .audience-card { background: white; border: 1.5px solid var(--gray-border); border-radius: var(--radius); padding: 28px 20px; text-align: center; transition: border-color .2s, box-shadow .2s; cursor: pointer; }
+    .audience-card:hover { border-color: var(--blue); box-shadow: 0 4px 20px rgba(37,99,235,.1); }
+    .audience-icon { width: 56px; height: 56px; margin: 0 auto 14px; background: var(--blue-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+    .audience-icon svg { stroke: var(--blue); width: 26px; height: 26px; fill: none; stroke-width: 1.8; }
+    .audience-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+    .audience-card p { font-size: 11.5px; color: var(--gray); line-height: 1.5; }
 
     /* CTA */
-    .cta-wrap {
-      max-width: 1152px;
-      margin: 0 auto 80px;
-      padding: 0 64px;
-    }
-
-    .cta-banner {
-      background: linear-gradient(135deg, #1D4ED8, #2563EB);
-      border-radius: 20px;
-      padding: 56px 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-banner::before {
-      content: '';
-      position: absolute;
-      right: -60px;
-      top: -60px;
-      width: 280px;
-      height: 280px;
-      background: rgba(255, 255, 255, .06);
-      border-radius: 50%;
-    }
-
-    .cta-left {
-      flex: 1;
-    }
-
-    .cta-banner h2 {
-      text-align: left;
-      color: white;
-      font-size: 30px;
-      margin-bottom: 12px;
-    }
-
-    .cta-banner p {
-      color: rgba(255, 255, 255, .8);
-      font-size: 15px;
-    }
-
-    .btn-white {
-      background: white;
-      color: var(--blue);
-      padding: 14px 28px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-      transition: box-shadow .2s;
-      flex-shrink: 0;
-    }
-
-    .btn-white:hover {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, .15);
-    }
+    .cta-wrap { max-width: 1152px; margin: 0 auto 80px; padding: 0 64px; }
+    .cta-banner { background: linear-gradient(135deg,#1D4ED8,#2563EB); border-radius: 20px; padding: 56px 64px; display: flex; align-items: center; justify-content: space-between; gap: 40px; position: relative; overflow: hidden; }
+    .cta-banner::before { content:''; position:absolute; right:-60px; top:-60px; width:280px; height:280px; background:rgba(255,255,255,.06); border-radius:50%; }
+    .cta-left { flex: 1; }
+    .cta-banner h2 { text-align: left; color: white; font-size: 30px; margin-bottom: 12px; }
+    .cta-banner p { color: rgba(255,255,255,.8); font-size: 15px; }
+    .btn-white { background: white; color: var(--blue); padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; transition: box-shadow .2s; flex-shrink: 0; }
+    .btn-white:hover { box-shadow: 0 6px 20px rgba(0,0,0,.15); }
 
     /* FOOTER */
-    footer {
-      background: var(--gray-light);
-      border-top: 1px solid var(--gray-border);
-      padding: 56px 64px 32px;
-    }
+    footer { background: var(--gray-light); border-top: 1px solid var(--gray-border); padding: 56px 64px 32px; }
+    .footer-grid { max-width: 1280px; margin: 0 auto 40px; display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; }
+    .footer-col h5 { font-size: 13px; font-weight: 700; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { text-decoration: none; font-size: 13px; color: var(--gray); transition: color .2s; }
+    .footer-col ul a:hover { color: var(--blue); }
+    .social-links { display: flex; gap: 12px; }
+    .social-link { width: 36px; height: 36px; border: 1.5px solid var(--gray-border); border-radius: 8px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--dark); font-size: 12px; font-weight: 700; transition: border-color .2s, color .2s; }
+    .social-link:hover { border-color: var(--blue); color: var(--blue); }
+    .footer-bottom { max-width: 1280px; margin: 0 auto; border-top: 1px solid var(--gray-border); padding-top: 24px; text-align: center; font-size: 12px; color: var(--gray); }
 
-    .footer-grid {
-      max-width: 1280px;
-      margin: 0 auto 40px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 40px;
-    }
+    /* ===================== RESPONSIVE ===================== */
 
-    .footer-col h5 {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    .footer-col ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .footer-col ul a {
-      text-decoration: none;
-      font-size: 13px;
-      color: var(--gray);
-      transition: color .2s;
-    }
-
-    .footer-col ul a:hover {
-      color: var(--blue);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 12px;
-    }
-
-    .social-link {
-      width: 36px;
-      height: 36px;
-      border: 1.5px solid var(--gray-border);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      color: var(--dark);
-      font-size: 12px;
-      font-weight: 700;
-      transition: border-color .2s, color .2s;
-    }
-
-    .social-link:hover {
-      border-color: var(--blue);
-      color: var(--blue);
-    }
-
-    .footer-bottom {
-      max-width: 1280px;
-      margin: 0 auto;
-      border-top: 1px solid var(--gray-border);
-      padding-top: 24px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--gray);
-    }
-
+    /* Tablet: 1024px */
     @media (max-width: 1100px) {
-      .features-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .preview-cards {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .audience-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .features-grid { grid-template-columns: repeat(3,1fr); }
+      .preview-cards { grid-template-columns: repeat(3,1fr); }
+      .audience-grid { grid-template-columns: repeat(3,1fr); }
+      .footer-grid { grid-template-columns: repeat(2,1fr); }
+      nav { padding: 0 32px; }
+      .lang-bar { padding: 6px 32px; }
+      section, .features-inner, .preview-inner { padding-left: 32px; padding-right: 32px; }
+      .cta-wrap { padding: 0 32px; }
+      footer { padding: 56px 32px 32px; }
+      .hero { padding: 60px 32px 40px; gap: 40px; }
     }
 
+    /* Tablet-portrait / large mobile: 768px */
+    @media (max-width: 900px) {
+      .steps-grid { flex-wrap: wrap; gap: 16px; justify-content: center; }
+      .step { width: 140px; }
+      .step-arrow { display: none; }
+      .hero-right { min-height: 360px; }
+      .phone-mockup { width: 180px; }
+      .phone-mockup-2 { width: 155px; right: -10px; }
+    }
+
+    /* Mobile: 768px */
     @media (max-width: 768px) {
+      /* Top bars */
+      .lang-bar { padding: 6px 16px; }
+      .announcement-bar { font-size: 12px; padding: 8px 16px; }
 
-      .lang-bar,
-      nav,
-      section,
-      .features-inner,
-      .preview-inner,
-      .cta-wrap,
-      footer {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
+      /* Nav */
+      nav { padding: 0 16px; height: 60px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
 
-      nav ul {
-        display: none;
-      }
+      /* Hero */
+      .hero { flex-direction: column; padding: 32px 16px 40px; gap: 40px; }
+      .hero-left { max-width: 100%; }
+      .hero-left h1 { font-size: 28px; }
+      .hero-right { width: 100%; min-height: 320px; justify-content: center; }
+      .phone-mockup { width: 160px; }
+      .phone-mockup-2 { width: 140px; right: 0px; top: 20px; }
 
-      .hero {
-        flex-direction: column;
-        padding: 40px 20px;
-      }
+      /* Sections */
+      section { padding: 48px 16px; }
+      h2 { font-size: 24px; margin-bottom: 36px; }
 
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      /* Features */
+      .features-bg { padding: 48px 0; }
+      .features-inner { padding: 0 16px; }
+      .features-inner h2 { margin-bottom: 36px; }
+      .features-grid { grid-template-columns: repeat(2,1fr); gap: 20px; }
 
-      .steps-grid {
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-      }
+      /* Steps */
+      .steps-section h2 { margin-bottom: 36px; }
+      .steps-grid { gap: 20px; }
+      .step { width: 130px; }
 
-      .step-arrow {
-        display: none;
-      }
+      /* Preview */
+      .preview-bg { padding: 48px 0; }
+      .preview-inner { padding: 0 16px; }
+      .preview-inner h2 { margin-bottom: 28px; }
+      .preview-cards { grid-template-columns: 1fr; gap: 16px; }
 
-      .preview-cards {
-        grid-template-columns: 1fr;
-      }
+      /* Audience */
+      .audience-section h2 { margin-bottom: 36px; }
+      .audience-grid { grid-template-columns: repeat(2,1fr); gap: 16px; }
+      .audience-card { padding: 20px 14px; }
 
-      .audience-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      /* CTA */
+      .cta-wrap { padding: 0 16px; margin-bottom: 48px; }
+      .cta-banner { flex-direction: column; padding: 36px 24px; gap: 24px; border-radius: 16px; }
+      .cta-banner h2 { font-size: 22px; margin-bottom: 8px; }
+      .cta-banner p { font-size: 14px; }
+      .btn-white { width: 100%; justify-content: center; }
 
-      .cta-banner {
-        flex-direction: column;
-        padding: 40px 28px;
-      }
-
-      h2 {
-        font-size: 26px;
-      }
-
-      .hero-left h1 {
-        font-size: 30px;
-      }
+      /* Footer */
+      footer { padding: 40px 16px 24px; }
+      .footer-grid { grid-template-columns: repeat(2,1fr); gap: 28px; margin-bottom: 28px; }
     }
 
-    .announcement-bar {
-      width: 100%;
-      background: #e42107;
-      color: #fff;
-      text-align: center;
-      padding: 10px 20px;
-      font-size: 14px;
-      line-height: 1.5;
-      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    /* Small mobile: 480px */
+    @media (max-width: 480px) {
+      .hero-left h1 { font-size: 24px; }
+      .hero-cta a { padding: 12px 20px; font-size: 14px; }
+      .features-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .audience-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .audience-card { padding: 18px 12px; }
+      .phone-mockup { width: 140px; }
+      .phone-mockup-2 { display: none; }
+      .hero-right { min-height: 260px; }
+      h2 { font-size: 22px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
     }
 
-    .announcement-bar a {
-      color: #60a5fa;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .announcement-bar a:hover {
-      text-decoration: underline;
+    /* Extra small: 360px */
+    @media (max-width: 360px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-left h1 { font-size: 22px; }
+      h2 { font-size: 20px; }
     }
   </style>
 </head>
-
 <body>
+
   <!-- ANNOUNCEMENT BAR -->
   <div class="announcement-bar">
-    <span data-i18n="header.info">
-
-    </span>
+    <span data-i18n="header.info"></span>
   </div>
+
   <!-- LANG BAR -->
   <div class="lang-bar">
     <button class="lang-btn active" onclick="setLang('az')">AZ</button>
@@ -1289,13 +355,11 @@
   <nav>
     <a href="#" class="logo">
       <div class="logo-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-        </svg>
+        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
       corp-bridge
     </a>
-    <ul>
+    <ul class="nav-links">
       <li><a href="#" data-i18n="nav.home"></a></li>
       <li><a href="#" data-i18n="nav.solutions"></a></li>
       <li><a href="#" data-i18n="nav.features"></a></li>
@@ -1303,7 +367,33 @@
       <li><a href="#" data-i18n="nav.about"></a></li>
       <li><a href="#" data-i18n="nav.contact"></a></li>
     </ul>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <a href="#" class="logo" onclick="toggleMenu()">
+        <div class="logo-icon"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        corp-bridge
+      </a>
+      <button class="mobile-menu-close" onclick="toggleMenu()">×</button>
+    </div>
+    <ul>
+      <li><a href="#" data-i18n="nav.home" onclick="toggleMenu()"></a></li>
+      <li><a href="#" data-i18n="nav.solutions" onclick="toggleMenu()"></a></li>
+      <li><a href="#" data-i18n="nav.features" onclick="toggleMenu()"></a></li>
+      <li><a href="#" data-i18n="nav.platform" onclick="toggleMenu()"></a></li>
+      <li><a href="#" data-i18n="nav.about" onclick="toggleMenu()"></a></li>
+      <li><a href="#" data-i18n="nav.contact" onclick="toggleMenu()"></a></li>
+    </ul>
+    <div class="mobile-menu-lang">
+      <button class="mobile-lang-btn active" id="mobileLangAz" onclick="setLang('az'); updateMobileLang();">AZ</button>
+      <button class="mobile-lang-btn" id="mobileLangEn" onclick="setLang('en'); updateMobileLang();">EN</button>
+    </div>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1317,21 +407,13 @@
       <p class="store-note" data-i18n="hero.platforms"></p>
       <div class="store-icons">
         <div class="store-icon" title="Web">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="2" y1="12" x2="22" y2="12" />
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <div class="store-icon" title="Google Play">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8">
-            <polygon points="5 3 19 12 5 21 5 3" />
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
         <div class="store-icon" title="App Store">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8">
-            <path d="M12 19.5C8.5 19.5 6 17 6 13.5c0-2.5 1.5-4.5 3-5.5M12 4.5c3.5 0 6 2.5 6 6s-2.5 5-6 5M9 9l3-5 3 5" />
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8"><path d="M12 19.5C8.5 19.5 6 17 6 13.5c0-2.5 1.5-4.5 3-5.5M12 4.5c3.5 0 6 2.5 6 6s-2.5 5-6 5M9 9l3-5 3 5"/></svg>
         </div>
       </div>
     </div>
@@ -1339,19 +421,12 @@
     <div class="hero-right">
       <!-- Phone 1 -->
       <div class="phone-mockup">
-        <div class="phone-notch">
-          <div class="phone-notch-bar"></div>
-        </div>
+        <div class="phone-notch"><div class="phone-notch-bar"></div></div>
         <div class="phone-screen">
           <div class="phone-status"><span>9:41</span><span>▮▮▮</span></div>
-          <div class="phone-header">
-            <h4>Market</h4>
-          </div>
+          <div class="phone-header"><h4>Market</h4></div>
           <div class="phone-search">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <span data-i18n="phone.search"></span>
           </div>
           <div class="phone-tabs-row">
@@ -1360,76 +435,39 @@
             <div class="phone-tab" data-i18n="phone.services"></div>
           </div>
           <div class="phone-cats">
-            <div class="phone-cat">
-              <div class="phone-cat-icon">🏗️</div><span data-i18n="cat.construction"></span>
-            </div>
-            <div class="phone-cat">
-              <div class="phone-cat-icon">⚙️</div><span data-i18n="cat.industry"></span>
-            </div>
-            <div class="phone-cat">
-              <div class="phone-cat-icon">🚚</div><span data-i18n="cat.logistics"></span>
-            </div>
-            <div class="phone-cat">
-              <div class="phone-cat-icon">💡</div><span data-i18n="cat.energy"></span>
-            </div>
+            <div class="phone-cat"><div class="phone-cat-icon">🏗️</div><span data-i18n="cat.construction"></span></div>
+            <div class="phone-cat"><div class="phone-cat-icon">⚙️</div><span data-i18n="cat.industry"></span></div>
+            <div class="phone-cat"><div class="phone-cat-icon">🚚</div><span data-i18n="cat.logistics"></span></div>
+            <div class="phone-cat"><div class="phone-cat-icon">💡</div><span data-i18n="cat.energy"></span></div>
           </div>
           <div class="phone-section-label" data-i18n="phone.popular"></div>
           <div class="phone-product">
             <div class="phone-product-img" style="background:linear-gradient(135deg,#A5B4FC,#6366F1)"></div>
-            <div>
-              <div class="phone-product-name" data-i18n="product.concrete"></div>
-              <div class="phone-product-price">130 AZN/m³</div>
-            </div>
+            <div><div class="phone-product-name" data-i18n="product.concrete"></div><div class="phone-product-price">130 AZN/m³</div></div>
           </div>
           <div class="phone-product">
             <div class="phone-product-img" style="background:linear-gradient(135deg,#86EFAC,#16A34A)"></div>
-            <div>
-              <div class="phone-product-name" data-i18n="product.steel"></div>
-              <div class="phone-product-price">1.25 AZN/kg</div>
-            </div>
+            <div><div class="phone-product-name" data-i18n="product.steel"></div><div class="phone-product-price">1.25 AZN/kg</div></div>
           </div>
           <div class="phone-more" data-i18n="phone.showAll"></div>
         </div>
       </div>
-
       <!-- Phone 2 -->
       <div class="phone-mockup-2">
-        <div class="phone-notch">
-          <div class="phone-notch-bar"></div>
-        </div>
+        <div class="phone-notch"><div class="phone-notch-bar"></div></div>
         <div class="msg-screen">
           <div class="phone-status" style="font-size:8px;padding:6px 12px 3px;"><span>9:41</span><span>▮▮▮</span></div>
           <div class="msg-contact">
             <div class="msg-avatar"></div>
-            <div>
-              <div class="msg-name-text">Tech Solutions MMC</div>
-              <div class="msg-status-text">● <span data-i18n="msg.online"></span></div>
-            </div>
+            <div><div class="msg-name-text">Tech Solutions MMC</div><div class="msg-status-text">● <span data-i18n="msg.online"></span></div></div>
           </div>
           <div class="msg-bubble inc" data-i18n="msg.b1"></div>
           <div class="msg-bubble out" data-i18n="msg.b2"></div>
           <div class="msg-bubble inc" data-i18n="msg.b3"></div>
-          <div class="msg-file">
-            <span>📄</span>
-            <div>
-              <div style="font-weight:700">Təklif.pdf</div>
-              <div style="color:var(--gray)">2.4 Mb</div>
-            </div>
-          </div>
-          <div class="msg-input">
-            <span data-i18n="msg.placeholder"></span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.2">
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-          </div>
+          <div class="msg-file"><span>📄</span><div><div style="font-weight:700">Təklif.pdf</div><div style="color:var(--gray)">2.4 Mb</div></div></div>
+          <div class="msg-input"><span data-i18n="msg.placeholder"></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
         </div>
       </div>
-
-      <!-- <div class="float-card">
-        <strong>2,400+</strong>
-        <span data-i18n="hero.stat"></span>
-      </div> -->
     </div>
   </section>
 
@@ -1439,55 +477,28 @@
       <h2 data-i18n="features.title"></h2>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon"><svg viewBox="0 0 24 24">
-              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <path d="M16 10a4 4 0 0 1-8 0" />
-            </svg></div>
-          <h3>Marketplace</h3>
-          <p data-i18n="features.f1"></p>
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+          <h3>Marketplace</h3><p data-i18n="features.f1"></p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon"><svg viewBox="0 0 24 24">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="16" y1="13" x2="8" y2="13" />
-              <line x1="16" y1="17" x2="8" y2="17" />
-            </svg></div>
-          <h3>RFQ</h3>
-          <p data-i18n="features.f2"></p>
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <h3>RFQ</h3><p data-i18n="features.f2"></p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon"><svg viewBox="0 0 24 24">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg></div>
-          <h3 data-i18n="features.h3"></h3>
-          <p data-i18n="features.f3"></p>
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3 data-i18n="features.h3"></h3><p data-i18n="features.f3"></p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon"><svg viewBox="0 0 24 24">
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-            </svg></div>
-          <h3 data-i18n="features.h4"></h3>
-          <p data-i18n="features.f4"></p>
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+          <h3 data-i18n="features.h4"></h3><p data-i18n="features.f4"></p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon"><svg viewBox="0 0 24 24">
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg></div>
-          <h3 data-i18n="features.h5"></h3>
-          <p data-i18n="features.f5"></p>
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <h3 data-i18n="features.h5"></h3><p data-i18n="features.f5"></p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon"><svg viewBox="0 0 24 24">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg></div>
-          <h3 data-i18n="features.h6"></h3>
-          <p data-i18n="features.f6"></p>
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3 data-i18n="features.h6"></h3><p data-i18n="features.f6"></p>
         </div>
       </div>
     </div>
@@ -1499,56 +510,32 @@
     <div class="steps-grid">
       <div class="step">
         <div class="step-num">1</div>
-        <div class="step-icon-wrap"><svg viewBox="0 0 24 24">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg></div>
-        <h4 data-i18n="steps.s1h"></h4>
-        <p data-i18n="steps.s1p"></p>
+        <div class="step-icon-wrap"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h4 data-i18n="steps.s1h"></h4><p data-i18n="steps.s1p"></p>
       </div>
       <div class="step-arrow">›</div>
       <div class="step">
         <div class="step-num">2</div>
-        <div class="step-icon-wrap"><svg viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="2" />
-            <line x1="3" y1="9" x2="21" y2="9" />
-            <line x1="9" y1="21" x2="9" y2="9" />
-          </svg></div>
-        <h4 data-i18n="steps.s2h"></h4>
-        <p data-i18n="steps.s2p"></p>
+        <div class="step-icon-wrap"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+        <h4 data-i18n="steps.s2h"></h4><p data-i18n="steps.s2p"></p>
       </div>
       <div class="step-arrow">›</div>
       <div class="step">
         <div class="step-num">3</div>
-        <div class="step-icon-wrap"><svg viewBox="0 0 24 24">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-            <circle cx="9" cy="7" r="4" />
-            <line x1="23" y1="11" x2="17" y2="11" />
-            <line x1="20" y1="8" x2="20" y2="14" />
-          </svg></div>
-        <h4 data-i18n="steps.s3h"></h4>
-        <p data-i18n="steps.s3p"></p>
+        <div class="step-icon-wrap"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/><line x1="20" y1="8" x2="20" y2="14"/></svg></div>
+        <h4 data-i18n="steps.s3h"></h4><p data-i18n="steps.s3p"></p>
       </div>
       <div class="step-arrow">›</div>
       <div class="step">
         <div class="step-num">4</div>
-        <div class="step-icon-wrap"><svg viewBox="0 0 24 24">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-          </svg></div>
-        <h4 data-i18n="steps.s4h"></h4>
-        <p data-i18n="steps.s4p"></p>
+        <div class="step-icon-wrap"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        <h4 data-i18n="steps.s4h"></h4><p data-i18n="steps.s4p"></p>
       </div>
       <div class="step-arrow">›</div>
       <div class="step">
         <div class="step-num">5</div>
-        <div class="step-icon-wrap"><svg viewBox="0 0 24 24">
-            <line x1="18" y1="20" x2="18" y2="10" />
-            <line x1="12" y1="20" x2="12" y2="4" />
-            <line x1="6" y1="20" x2="6" y2="14" />
-          </svg></div>
-        <h4 data-i18n="steps.s5h"></h4>
-        <p data-i18n="steps.s5p"></p>
+        <div class="step-icon-wrap"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <h4 data-i18n="steps.s5h"></h4><p data-i18n="steps.s5p"></p>
       </div>
     </div>
   </section>
@@ -1558,7 +545,6 @@
     <div class="preview-inner">
       <h2 data-i18n="preview.title"></h2>
       <div class="preview-cards">
-
         <div class="preview-card">
           <h4 data-i18n="preview.company"></h4>
           <div class="co-avatar">🏗️</div>
@@ -1570,39 +556,17 @@
           <div class="co-sub" data-i18n="preview.aboutSub"></div>
           <a href="#" class="co-link" data-i18n="preview.more"></a>
         </div>
-
         <div class="preview-card">
           <h4>Market</h4>
-          <div class="mkt-search">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-            <span data-i18n="phone.search"></span>
-          </div>
+          <div class="mkt-search"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span data-i18n="phone.search"></span></div>
           <div class="mkt-tabs">
             <div class="mkt-tab" data-i18n="phone.all"></div>
             <div class="mkt-tab g" data-i18n="phone.products"></div>
             <div class="mkt-tab g" data-i18n="phone.services"></div>
           </div>
-          <div class="mkt-item">
-            <div class="mkt-img" style="background:linear-gradient(135deg,#BFDBFE,#3B82F6)"></div>
-            <div>
-              <div class="mkt-name" data-i18n="mkt.item1"></div>
-              <div class="mkt-price">2,550 AZN</div>
-              <div class="mkt-unit" data-i18n="mkt.unit1"></div>
-            </div>
-          </div>
-          <div class="mkt-item">
-            <div class="mkt-img" style="background:linear-gradient(135deg,#BBF7D0,#16A34A)"></div>
-            <div>
-              <div class="mkt-name" data-i18n="mkt.item2"></div>
-              <div class="mkt-price">7.80 AZN</div>
-              <div class="mkt-unit" data-i18n="mkt.unit2"></div>
-            </div>
-          </div>
+          <div class="mkt-item"><div class="mkt-img" style="background:linear-gradient(135deg,#BFDBFE,#3B82F6)"></div><div><div class="mkt-name" data-i18n="mkt.item1"></div><div class="mkt-price">2,550 AZN</div><div class="mkt-unit" data-i18n="mkt.unit1"></div></div></div>
+          <div class="mkt-item"><div class="mkt-img" style="background:linear-gradient(135deg,#BBF7D0,#16A34A)"></div><div><div class="mkt-name" data-i18n="mkt.item2"></div><div class="mkt-price">7.80 AZN</div><div class="mkt-unit" data-i18n="mkt.unit2"></div></div></div>
         </div>
-
         <div class="preview-card">
           <h4>RFQ</h4>
           <div class="rfq-lbl" data-i18n="rfq.cat"></div>
@@ -1613,74 +577,22 @@
           <div class="rfq-val">25.06.2025</div>
           <button class="rfq-btn" data-i18n="rfq.btn"></button>
         </div>
-
         <div class="preview-card">
           <h4 data-i18n="features.h3"></h4>
-          <div class="ml-item">
-            <div class="ml-av">G</div>
-            <div>
-              <div class="ml-name">Global Logistics <span class="odot"></span></div>
-              <div class="ml-prev" data-i18n="msg.online"></div>
-            </div>
-            <div class="ml-time" data-i18n="msg.now"></div>
-          </div>
-          <div class="ml-item">
-            <div class="ml-av" style="background:linear-gradient(135deg,#A5B4FC,#6366F1)">T</div>
-            <div>
-              <div class="ml-name">Tech Solutions MMC</div>
-              <div class="ml-prev" data-i18n="msg.5h"></div>
-            </div>
-          </div>
-          <div class="ml-item">
-            <div class="ml-av" style="background:linear-gradient(135deg,#86EFAC,#16A34A)">B</div>
-            <div>
-              <div class="ml-name">Build Group MMC</div>
-              <div class="ml-prev" data-i18n="msg.5h"></div>
-            </div>
-          </div>
-          <div class="ml-item">
-            <div class="ml-av" style="background:linear-gradient(135deg,#FDE68A,#F59E0B)">E</div>
-            <div>
-              <div class="ml-name">Energy Solutions MMC</div>
-              <div class="ml-prev" data-i18n="msg.3d"></div>
-            </div>
-          </div>
+          <div class="ml-item"><div class="ml-av">G</div><div><div class="ml-name">Global Logistics <span class="odot"></span></div><div class="ml-prev" data-i18n="msg.online"></div></div><div class="ml-time" data-i18n="msg.now"></div></div>
+          <div class="ml-item"><div class="ml-av" style="background:linear-gradient(135deg,#A5B4FC,#6366F1)">T</div><div><div class="ml-name">Tech Solutions MMC</div><div class="ml-prev" data-i18n="msg.5h"></div></div></div>
+          <div class="ml-item"><div class="ml-av" style="background:linear-gradient(135deg,#86EFAC,#16A34A)">B</div><div><div class="ml-name">Build Group MMC</div><div class="ml-prev" data-i18n="msg.5h"></div></div></div>
+          <div class="ml-item"><div class="ml-av" style="background:linear-gradient(135deg,#FDE68A,#F59E0B)">E</div><div><div class="ml-name">Energy Solutions MMC</div><div class="ml-prev" data-i18n="msg.3d"></div></div></div>
         </div>
-
         <div class="preview-card">
           <h4 data-i18n="features.h4"></h4>
           <div class="doc-cat-row"><span data-i18n="docs.cats"></span><span style="color:var(--gray)">···</span></div>
-          <div class="doc-item">
-            <div class="doc-ico bl">📋</div>
-            <div>
-              <div class="doc-iname" data-i18n="docs.contracts"></div>
-              <div class="doc-icount">12</div>
-            </div>
-          </div>
-          <div class="doc-item">
-            <div class="doc-ico gr">📄</div>
-            <div>
-              <div class="doc-iname" data-i18n="docs.offers"></div>
-              <div class="doc-icount">8</div>
-            </div>
-          </div>
-          <div class="doc-item">
-            <div class="doc-ico or">🏆</div>
-            <div>
-              <div class="doc-iname" data-i18n="docs.certs"></div>
-              <div class="doc-icount">5</div>
-            </div>
-          </div>
-          <div class="doc-item">
-            <div class="doc-ico pu">🧾</div>
-            <div>
-              <div class="doc-iname" data-i18n="docs.invoices"></div>
-              <div class="doc-icount">15</div>
-            </div>
-          </div>
+          <div class="doc-item"><div class="doc-ico bl">📋</div><div><div class="doc-iname" data-i18n="docs.contracts"></div><div class="doc-icount">12</div></div></div>
+          <div class="doc-item"><div class="doc-ico gr">📄</div><div><div class="doc-iname" data-i18n="docs.offers"></div><div class="doc-icount">8</div></div></div>
+          <div class="doc-item"><div class="doc-ico or">🏆</div><div><div class="doc-iname" data-i18n="docs.certs"></div><div class="doc-icount">5</div></div></div>
+          <div class="doc-item"><div class="doc-ico pu">🧾</div><div><div class="doc-iname" data-i18n="docs.invoices"></div><div class="doc-icount">15</div></div></div>
           <button class="doc-btn" data-i18n="docs.upload"></button>
         </div>
-
       </div>
     </div>
   </div>
@@ -1689,52 +601,11 @@
   <section class="audience-section">
     <h2 data-i18n="audience.title"></h2>
     <div class="audience-grid">
-      <div class="audience-card">
-        <div class="audience-icon"><svg viewBox="0 0 24 24">
-            <rect x="2" y="7" width="20" height="14" rx="2" />
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-          </svg></div>
-        <h3 data-i18n="audience.a1h"></h3>
-        <p data-i18n="audience.a1p"></p>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon"><svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="2" y1="12" x2="22" y2="12" />
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-          </svg></div>
-        <h3 data-i18n="audience.a2h"></h3>
-        <p data-i18n="audience.a2p"></p>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon"><svg viewBox="0 0 24 24">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-            <circle cx="9" cy="7" r="4" />
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-          </svg></div>
-        <h3 data-i18n="audience.a3h"></h3>
-        <p data-i18n="audience.a3p"></p>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon"><svg viewBox="0 0 24 24">
-            <polyline points="16 3 21 3 21 8" />
-            <line x1="4" y1="20" x2="21" y2="3" />
-            <polyline points="21 16 21 21 16 21" />
-            <line x1="15" y1="15" x2="21" y2="21" />
-          </svg></div>
-        <h3 data-i18n="audience.a4h"></h3>
-        <p data-i18n="audience.a4p"></p>
-      </div>
-      <div class="audience-card">
-        <div class="audience-icon"><svg viewBox="0 0 24 24">
-            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
-            <line x1="8" y1="2" x2="8" y2="18" />
-            <line x1="16" y1="6" x2="16" y2="22" />
-          </svg></div>
-        <h3 data-i18n="audience.a5h"></h3>
-        <p data-i18n="audience.a5p"></p>
-      </div>
+      <div class="audience-card"><div class="audience-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><h3 data-i18n="audience.a1h"></h3><p data-i18n="audience.a1p"></p></div>
+      <div class="audience-card"><div class="audience-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3 data-i18n="audience.a2h"></h3><p data-i18n="audience.a2p"></p></div>
+      <div class="audience-card"><div class="audience-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 data-i18n="audience.a3h"></h3><p data-i18n="audience.a3p"></p></div>
+      <div class="audience-card"><div class="audience-icon"><svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg></div><h3 data-i18n="audience.a4h"></h3><p data-i18n="audience.a4p"></p></div>
+      <div class="audience-card"><div class="audience-icon"><svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></div><h3 data-i18n="audience.a5h"></h3><p data-i18n="audience.a5p"></p></div>
     </div>
   </section>
 
@@ -1798,210 +669,104 @@
     const translations = {
       az: {
         "header.info": "Bu layihə hazırda aktiv inkişaf mərhələsindədir. Layihənin inkişafına dəstək vermək və ya əməkdaşlıq imkanlarını müzakirə etmək istəyirsinizsə, bizimlə abbaseliyev1993@gmail.com ünvanı vasitəsilə əlaqə saxlaya bilərsiniz.",
-        "nav.home": "Ana səhifə",
-        "nav.solutions": "Həllər",
-        "nav.features": "İmkanlar",
-        "nav.platform": "Platforma",
-        "nav.about": "Haqqımızda",
-        "nav.contact": "Əlaqə",
+        "nav.home": "Ana səhifə", "nav.solutions": "Həllər", "nav.features": "İmkanlar",
+        "nav.platform": "Platforma", "nav.about": "Haqqımızda", "nav.contact": "Əlaqə",
         "hero.title": "Bütün biznes əlaqələriniz bir platformada.",
         "hero.subtitle": "Şirkətinizi tanıdın, yeni partnyorlar tapın, məhsul və xidmətlərinizi təqdim edin, birlikdə böyüyün.",
-        "hero.checklist": ["Marketplace – məhsul və xidmətlər", "RFQ – təkliflər alın və göndərin", "Şirkətlərarası mesajlaşma", "Sənəd dövriyyəsi və tenderlər", "Sosial paylaşımlar və xəbər axını"],
+        "hero.checklist": ["Marketplace – məhsul və xidmətlər","RFQ – təkliflər alın və göndərin","Şirkətlərarası mesajlaşma","Sənəd dövriyyəsi və tenderlər","Sosial paylaşımlar və xəbər axını"],
         "hero.cta": "Pulsuz qeydiyyatdan keçin",
         "hero.platforms": "Veb, Android və iOS platformaları tezliklə istifadəyə veriləcək.",
         "hero.stat": "Aktiv şirkət",
-        "phone.search": "Axtarış edin...",
-        "phone.all": "Hamısı",
-        "phone.products": "Məhsullar",
-        "phone.services": "Xidmətlər",
-        "cat.construction": "Tikinti",
-        "cat.industry": "Sənaye",
-        "cat.logistics": "Logistika",
-        "cat.energy": "Enerji",
-        "phone.popular": "Populyar məhsullar",
-        "product.concrete": "Beton qarışığı M300",
-        "product.steel": "Polad armatur",
+        "phone.search": "Axtarış edin...", "phone.all": "Hamısı", "phone.products": "Məhsullar", "phone.services": "Xidmətlər",
+        "cat.construction": "Tikinti", "cat.industry": "Sənaye", "cat.logistics": "Logistika", "cat.energy": "Enerji",
+        "phone.popular": "Populyar məhsullar", "product.concrete": "Beton qarışığı M300", "product.steel": "Polad armatur",
         "phone.showAll": "Bütününü göstər →",
-        "msg.online": "Onlayn",
-        "msg.b1": "Salam, xidmətləriniz haqqında ətraflı məlumat ala bilərəm?",
-        "msg.b2": "Salam! Əlbəttə, sizə təqdim edə bilərik...",
-        "msg.b3": "Çox sağ olun, təklifinizi gözləyirəm.",
-        "msg.placeholder": "Mesaj yazın...",
-        "msg.now": "indi",
-        "msg.5h": "5 saat əvvəl",
-        "msg.3d": "3 gün əvvəl",
+        "msg.online": "Onlayn", "msg.b1": "Salam, xidmətləriniz haqqında ətraflı məlumat ala bilərəm?",
+        "msg.b2": "Salam! Əlbəttə, sizə təqdim edə bilərik...", "msg.b3": "Çox sağ olun, təklifinizi gözləyirəm.",
+        "msg.placeholder": "Mesaj yazın...", "msg.now": "indi", "msg.5h": "5 saat əvvəl", "msg.3d": "3 gün əvvəl",
         "features.title": "Platformanın imkanları",
         "features.f1": "Məhsul və xidmətlərinizi yerləşdirin, yeni müştərilər qazanın.",
         "features.f2": "Təklif sorğuları yaradın və uyğun təkliflər alın.",
-        "features.h3": "Mesajlaşma",
-        "features.f3": "Şirkətlərlə birbaşa əlaqə qurun.",
-        "features.h4": "Sənəd dövriyyəsi",
-        "features.f4": "Sənədlərinizi təhlükəsiz şəkildə idarə edin.",
-        "features.h5": "Tenderlər",
-        "features.f5": "Tender elanlarına qatılın və layihələr əldə edin.",
-        "features.h6": "Sosial paylaşımlar",
-        "features.f6": "Xəbərlərinizi paylaşın, biznes şəbəkənizi böyüdün.",
+        "features.h3": "Mesajlaşma", "features.f3": "Şirkətlərlə birbaşa əlaqə qurun.",
+        "features.h4": "Sənəd dövriyyəsi", "features.f4": "Sənədlərinizi təhlükəsiz şəkildə idarə edin.",
+        "features.h5": "Tenderlər", "features.f5": "Tender elanlarına qatılın və layihələr əldə edin.",
+        "features.h6": "Sosial paylaşımlar", "features.f6": "Xəbərlərinizi paylaşın, biznes şəbəkənizi böyüdün.",
         "steps.title": "Necə işləyir?",
-        "steps.s1h": "Qeydiyyatdan keçin",
-        "steps.s1p": "Şirkət hesabınızı yaradın və profilinizi tamamlayın.",
-        "steps.s2h": "Məlumatınızı əlavə edin",
-        "steps.s2p": "Məhsul, xidmət və komanda məlumatlarınızı daxil edin.",
-        "steps.s3h": "Şəbəkənizə qoşulun",
-        "steps.s3p": "Yeni partnyorlar tapın, əlaqə qurun.",
-        "steps.s4h": "Elan və sorğular yaradın",
-        "steps.s4p": "Məhsul yerləşdirin və ya RFQ ilə təklif alın.",
-        "steps.s5h": "Birlikdə böyüyün",
-        "steps.s5p": "Yeni layihələrdə iştirak edin və biznesinizi genişləndirin.",
-        "preview.title": "Platformaya daha yaxından baxın",
-        "preview.company": "Şirkət profili",
-        "preview.city": "Bakı, Azərbaycan",
-        "preview.coDesc": "Tikinti və mühəndislik sahəsində fəaliyyət göstərən şirkət.",
-        "preview.about": "Haqqımızda",
-        "preview.aboutSub": "Rəsmi məlumat, sertifikatlar, layihələr...",
-        "preview.more": "Daha ətraflı →",
-        "mkt.item1": "Elektrik generatoru",
-        "mkt.unit1": "ədəd/vahid",
-        "mkt.item2": "Sement M400",
-        "mkt.unit2": "ədəd/kisə",
-        "rfq.cat": "Kateqoriya seçin",
-        "rfq.catVal": "Tikinti materialları",
-        "rfq.desc": "Təsvir",
-        "rfq.descVal": "Beton M300 – 100 m³\nÇatdırılma: Bakı şəhəri",
-        "rfq.deadline": "Təkliflərin son tarixi",
-        "rfq.btn": "Yarat",
-        "docs.cats": "Kateqoriyalar",
-        "docs.contracts": "Müqavilələr",
-        "docs.offers": "Təkliflər",
-        "docs.certs": "Sertifikatlar",
-        "docs.invoices": "Hesab-fakturalar",
-        "docs.upload": "Sənəd yüklə",
+        "steps.s1h": "Qeydiyyatdan keçin", "steps.s1p": "Şirkət hesabınızı yaradın və profilinizi tamamlayın.",
+        "steps.s2h": "Məlumatınızı əlavə edin", "steps.s2p": "Məhsul, xidmət və komanda məlumatlarınızı daxil edin.",
+        "steps.s3h": "Şəbəkənizə qoşulun", "steps.s3p": "Yeni partnyorlar tapın, əlaqə qurun.",
+        "steps.s4h": "Elan və sorğular yaradın", "steps.s4p": "Məhsul yerləşdirin və ya RFQ ilə təklif alın.",
+        "steps.s5h": "Birlikdə böyüyün", "steps.s5p": "Yeni layihələrdə iştirak edin və biznesinizi genişləndirin.",
+        "preview.title": "Platformaya daha yaxından baxın", "preview.company": "Şirkət profili",
+        "preview.city": "Bakı, Azərbaycan", "preview.coDesc": "Tikinti və mühəndislik sahəsində fəaliyyət göstərən şirkət.",
+        "preview.about": "Haqqımızda", "preview.aboutSub": "Rəsmi məlumat, sertifikatlar, layihələr...", "preview.more": "Daha ətraflı →",
+        "mkt.item1": "Elektrik generatoru", "mkt.unit1": "ədəd/vahid", "mkt.item2": "Sement M400", "mkt.unit2": "ədəd/kisə",
+        "rfq.cat": "Kateqoriya seçin", "rfq.catVal": "Tikinti materialları", "rfq.desc": "Təsvir",
+        "rfq.descVal": "Beton M300 – 100 m³\nÇatdırılma: Bakı şəhəri", "rfq.deadline": "Təkliflərin son tarixi", "rfq.btn": "Yarat",
+        "docs.cats": "Kateqoriyalar", "docs.contracts": "Müqavilələr", "docs.offers": "Təkliflər",
+        "docs.certs": "Sertifikatlar", "docs.invoices": "Hesab-fakturalar", "docs.upload": "Sənəd yüklə",
         "audience.title": "Kimlər üçün nəzərdə tutulub?",
-        "audience.a1h": "İstehsalçılar",
-        "audience.a1p": "Məhsullarınızı daha geniş auditoriyaya təqdim edin.",
-        "audience.a2h": "Təchizatçılar",
-        "audience.a2p": "Yeni müştərilər tapın və satışlarınızı artırın.",
-        "audience.a3h": "Xidmət şirkətləri",
-        "audience.a3p": "Xidmətlərinizi tanıdın və yeni layihələr qazanın.",
-        "audience.a4h": "Distribyutorlar",
-        "audience.a4p": "Etibarlı partnyorlarla uzunmüddətli işləyin.",
-        "audience.a5h": "Tikinti şirkətləri",
-        "audience.a5p": "Layihələr üçün lazım olan hər şeyi bir yerdən tapın.",
+        "audience.a1h": "İstehsalçılar", "audience.a1p": "Məhsullarınızı daha geniş auditoriyaya təqdim edin.",
+        "audience.a2h": "Təchizatçılar", "audience.a2p": "Yeni müştərilər tapın və satışlarınızı artırın.",
+        "audience.a3h": "Xidmət şirkətləri", "audience.a3p": "Xidmətlərinizi tanıdın və yeni layihələr qazanın.",
+        "audience.a4h": "Distribyutorlar", "audience.a4p": "Etibarlı partnyorlarla uzunmüddətli işləyin.",
+        "audience.a5h": "Tikinti şirkətləri", "audience.a5p": "Layihələr üçün lazım olan hər şeyi bir yerdən tapın.",
         "cta.title": "Biznesiniz üçün yeni imkanlar açın",
         "cta.sub": "Pulsuz qeydiyyatdan keçin və minlərlə şirkət arasında yerinizi alın. Platformadan istifadə tamamilə pulsuzdur.",
-        "footer.platform": "Platforma",
-        "footer.company": "Şirkət",
-        "footer.support": "Dəstək",
-        "footer.follow": "Bizi izləyin",
-        "footer.news": "Xəbərlər",
-        "footer.careers": "Karyera",
-        "footer.partners": "Partnyorlar",
-        "footer.help": "Yardım mərkəzi",
-        "footer.terms": "İstifadə qaydaları",
-        "footer.privacy": "Məxfilik siyasəti",
+        "footer.platform": "Platforma", "footer.company": "Şirkət", "footer.support": "Dəstək", "footer.follow": "Bizi izləyin",
+        "footer.news": "Xəbərlər", "footer.careers": "Karyera", "footer.partners": "Partnyorlar",
+        "footer.help": "Yardım mərkəzi", "footer.terms": "İstifadə qaydaları", "footer.privacy": "Məxfilik siyasəti",
         "footer.rights": "Bütün hüquqlar qorunur."
       },
       en: {
         "header.info": "This project is currently under active development. If you would like to support the project or discuss collaboration opportunities, please contact us at abbaseliyev1993@gmail.com.",
-        "nav.home": "Home",
-        "nav.solutions": "Solutions",
-        "nav.features": "Features",
-        "nav.platform": "Platform",
-        "nav.about": "About",
-        "nav.contact": "Contact",
+        "nav.home": "Home", "nav.solutions": "Solutions", "nav.features": "Features",
+        "nav.platform": "Platform", "nav.about": "About", "nav.contact": "Contact",
         "hero.title": "All your business connections in one platform.",
         "hero.subtitle": "Showcase your company, find new partners, present your products and services, and grow together.",
-        "hero.checklist": ["Marketplace – products & services", "RFQ – send and receive quotes", "B2B messaging", "Document management & tenders", "Social posts & news feed"],
+        "hero.checklist": ["Marketplace – products & services","RFQ – send and receive quotes","B2B messaging","Document management & tenders","Social posts & news feed"],
         "hero.cta": "Get started for free",
         "hero.platforms": "Web, Android, and iOS platforms coming soon.",
         "hero.stat": "Active companies",
-        "phone.search": "Search...",
-        "phone.all": "All",
-        "phone.products": "Products",
-        "phone.services": "Services",
-        "cat.construction": "Build",
-        "cat.industry": "Industry",
-        "cat.logistics": "Logistics",
-        "cat.energy": "Energy",
-        "phone.popular": "Popular products",
-        "product.concrete": "Concrete mix M300",
-        "product.steel": "Steel rebar",
+        "phone.search": "Search...", "phone.all": "All", "phone.products": "Products", "phone.services": "Services",
+        "cat.construction": "Build", "cat.industry": "Industry", "cat.logistics": "Logistics", "cat.energy": "Energy",
+        "phone.popular": "Popular products", "product.concrete": "Concrete mix M300", "product.steel": "Steel rebar",
         "phone.showAll": "Show all →",
-        "msg.online": "Online",
-        "msg.b1": "Hello, can I get more details about your services?",
-        "msg.b2": "Hi! Of course, we can present to you...",
-        "msg.b3": "Thank you, looking forward to your offer.",
-        "msg.placeholder": "Type a message...",
-        "msg.now": "now",
-        "msg.5h": "5 hours ago",
-        "msg.3d": "3 days ago",
+        "msg.online": "Online", "msg.b1": "Hello, can I get more details about your services?",
+        "msg.b2": "Hi! Of course, we can present to you...", "msg.b3": "Thank you, looking forward to your offer.",
+        "msg.placeholder": "Type a message...", "msg.now": "now", "msg.5h": "5 hours ago", "msg.3d": "3 days ago",
         "features.title": "Platform Features",
         "features.f1": "List your products and services, gain new customers.",
         "features.f2": "Create quote requests and receive relevant offers.",
-        "features.h3": "Messaging",
-        "features.f3": "Connect directly with companies.",
-        "features.h4": "Documents",
-        "features.f4": "Manage your documents securely.",
-        "features.h5": "Tenders",
-        "features.f5": "Join tender announcements and win projects.",
-        "features.h6": "Social Feed",
-        "features.f6": "Share news and grow your business network.",
+        "features.h3": "Messaging", "features.f3": "Connect directly with companies.",
+        "features.h4": "Documents", "features.f4": "Manage your documents securely.",
+        "features.h5": "Tenders", "features.f5": "Join tender announcements and win projects.",
+        "features.h6": "Social Feed", "features.f6": "Share news and grow your business network.",
         "steps.title": "How does it work?",
-        "steps.s1h": "Register",
-        "steps.s1p": "Create your company account and complete your profile.",
-        "steps.s2h": "Add your info",
-        "steps.s2p": "Enter your products, services and team details.",
-        "steps.s3h": "Join the network",
-        "steps.s3p": "Find new partners and connect.",
-        "steps.s4h": "Post & request",
-        "steps.s4p": "List products or receive offers via RFQ.",
-        "steps.s5h": "Grow together",
-        "steps.s5p": "Join new projects and expand your business.",
-        "preview.title": "Explore the Platform",
-        "preview.company": "Company profile",
-        "preview.city": "Baku, Azerbaijan",
-        "preview.coDesc": "A company operating in construction and engineering.",
-        "preview.about": "About us",
-        "preview.aboutSub": "Official info, certificates, projects...",
-        "preview.more": "Learn more →",
-        "mkt.item1": "Electric generator",
-        "mkt.unit1": "per unit",
-        "mkt.item2": "Cement M400",
-        "mkt.unit2": "per bag",
-        "rfq.cat": "Select category",
-        "rfq.catVal": "Construction materials",
-        "rfq.desc": "Description",
-        "rfq.descVal": "Concrete M300 – 100 m³\nDelivery: Baku city",
-        "rfq.deadline": "Quote deadline",
-        "rfq.btn": "Create",
-        "docs.cats": "Categories",
-        "docs.contracts": "Contracts",
-        "docs.offers": "Offers",
-        "docs.certs": "Certificates",
-        "docs.invoices": "Invoices",
-        "docs.upload": "Upload document",
+        "steps.s1h": "Register", "steps.s1p": "Create your company account and complete your profile.",
+        "steps.s2h": "Add your info", "steps.s2p": "Enter your products, services and team details.",
+        "steps.s3h": "Join the network", "steps.s3p": "Find new partners and connect.",
+        "steps.s4h": "Post & request", "steps.s4p": "List products or receive offers via RFQ.",
+        "steps.s5h": "Grow together", "steps.s5p": "Join new projects and expand your business.",
+        "preview.title": "Explore the Platform", "preview.company": "Company profile",
+        "preview.city": "Baku, Azerbaijan", "preview.coDesc": "A company operating in construction and engineering.",
+        "preview.about": "About us", "preview.aboutSub": "Official info, certificates, projects...", "preview.more": "Learn more →",
+        "mkt.item1": "Electric generator", "mkt.unit1": "per unit", "mkt.item2": "Cement M400", "mkt.unit2": "per bag",
+        "rfq.cat": "Select category", "rfq.catVal": "Construction materials", "rfq.desc": "Description",
+        "rfq.descVal": "Concrete M300 – 100 m³\nDelivery: Baku city", "rfq.deadline": "Quote deadline", "rfq.btn": "Create",
+        "docs.cats": "Categories", "docs.contracts": "Contracts", "docs.offers": "Offers",
+        "docs.certs": "Certificates", "docs.invoices": "Invoices", "docs.upload": "Upload document",
         "audience.title": "Who is it for?",
-        "audience.a1h": "Manufacturers",
-        "audience.a1p": "Present your products to a wider audience.",
-        "audience.a2h": "Suppliers",
-        "audience.a2p": "Find new customers and increase your sales.",
-        "audience.a3h": "Service companies",
-        "audience.a3p": "Showcase your services and win new projects.",
-        "audience.a4h": "Distributors",
-        "audience.a4p": "Work long-term with trusted partners.",
-        "audience.a5h": "Construction firms",
-        "audience.a5p": "Find everything you need for projects in one place.",
+        "audience.a1h": "Manufacturers", "audience.a1p": "Present your products to a wider audience.",
+        "audience.a2h": "Suppliers", "audience.a2p": "Find new customers and increase your sales.",
+        "audience.a3h": "Service companies", "audience.a3p": "Showcase your services and win new projects.",
+        "audience.a4h": "Distributors", "audience.a4p": "Work long-term with trusted partners.",
+        "audience.a5h": "Construction firms", "audience.a5p": "Find everything you need for projects in one place.",
         "cta.title": "Unlock new opportunities for your business",
         "cta.sub": "Register for free and take your place among thousands of companies. Using the platform is completely free.",
-        "footer.platform": "Platform",
-        "footer.company": "Company",
-        "footer.support": "Support",
-        "footer.follow": "Follow us",
-        "footer.news": "News",
-        "footer.careers": "Careers",
-        "footer.partners": "Partners",
-        "footer.help": "Help center",
-        "footer.terms": "Terms of use",
-        "footer.privacy": "Privacy policy",
+        "footer.platform": "Platform", "footer.company": "Company", "footer.support": "Support", "footer.follow": "Follow us",
+        "footer.news": "News", "footer.careers": "Careers", "footer.partners": "Partners",
+        "footer.help": "Help center", "footer.terms": "Terms of use", "footer.privacy": "Privacy policy",
         "footer.rights": "All rights reserved."
       }
     };
@@ -2011,35 +776,50 @@
     function setLang(lang) {
       currentLang = lang;
       document.documentElement.lang = lang;
-
-      // Update lang buttons
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
       });
-
       const t = translations[lang];
-
-      // Update all data-i18n elements
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (t[key] !== undefined && !Array.isArray(t[key])) {
           el.textContent = t[key];
         }
       });
-
-      // Rebuild hero checklist
       const list = document.getElementById('hero-list');
       list.innerHTML = '';
       (t['hero.checklist'] || []).forEach(item => {
         const li = document.createElement('li');
-        li.innerHTML = `<span class="check-icon"><svg viewBox="0 0 12 12" stroke-width="2.5" fill="none" stroke="white" xmlns="http://www.w3.org/2000/svg"><polyline points="2,6 5,9 10,3"/></svg></span>${item}`;
+        li.innerHTML = `<span class="check-icon"><svg viewBox="0 0 12 12" stroke-width="2.5" fill="none" stroke="white"><polyline points="2,6 5,9 10,3"/></svg></span>${item}`;
         list.appendChild(li);
       });
     }
 
-    // Init
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.getElementById('hamburger');
+      const isOpen = menu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    function updateMobileLang() {
+      document.getElementById('mobileLangAz').classList.toggle('active', currentLang === 'az');
+      document.getElementById('mobileLangEn').classList.toggle('active', currentLang === 'en');
+    }
+
+    // Close mobile menu on resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        const menu = document.getElementById('mobileMenu');
+        const hamburger = document.getElementById('hamburger');
+        menu.classList.remove('open');
+        hamburger.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+
     setLang('az');
   </script>
 </body>
-
-</html> 
+</html>
