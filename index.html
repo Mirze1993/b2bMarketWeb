@@ -669,7 +669,7 @@
   <script>
     const translations = {
       az: {
-        "header.info": "Bu layihə hazırda aktiv inkişaf mərhələsindədir. Layihənin inkişafına dəstək vermək və ya əməkdaşlıq imkanlarını müzakirə etmək istəyirsinizsə, bizimlə abbaseliyev1993@gmail.com ünvanı vasitəsilə əlaqə saxlaya bilərsiniz.",
+        "header.info": "Bu layihə hazırda aktiv inkişaf mərhələsindədir. Layihənin inkişafına dəstək vermək və ya əməkdaşlıq imkanlarını müzakirə etmək istəyirsinizsə, bizimlə <a href=\"mailto:contact@corp-bridge.com\">contact@corp-bridge.com</a> ünvanı vasitəsilə əlaqə saxlaya bilərsiniz.",
         "nav.home": "Ana səhifə", "nav.solutions": "Həllər", "nav.features": "İmkanlar",
         "nav.platform": "Platforma", "nav.about": "Haqqımızda", "nav.contact": "Əlaqə",
         "hero.title": "Bütün biznes əlaqələriniz bir platformada.",
@@ -720,7 +720,7 @@
         "footer.rights": "Bütün hüquqlar qorunur."
       },
       en: {
-        "header.info": "This project is currently under active development. If you would like to support the project or discuss collaboration opportunities, please contact us at abbaseliyev1993@gmail.com.",
+        "header.info": "This project is currently under active development. If you would like to support the project or discuss collaboration opportunities, please contact us at <a href=\"mailto:contact@corp-bridge.com\">contact@corp-bridge.com</a>.",
         "nav.home": "Home", "nav.solutions": "Solutions", "nav.features": "Features",
         "nav.platform": "Platform", "nav.about": "About", "nav.contact": "Contact",
         "hero.title": "All your business connections in one platform.",
@@ -784,7 +784,7 @@
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (t[key] !== undefined && !Array.isArray(t[key])) {
-          el.textContent = t[key];
+          el.innerHTML = t[key];
         }
       });
       const list = document.getElementById('hero-list');
