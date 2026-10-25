@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#2563EB" />
     <meta
       name="description"
-      content="corp-bridge – B2B biznes platforması. Marketplace, RFQ, Mesajlaşma, Tenderlər, HR və Payroll."
+      content="corp-bridge – B2B biznes platforması. Marketplace, RFQ, Mesajlaşma, Wiki, AI, Avtomatlaşdırma, Tenderlər, HR və Payroll."
     />
     <meta
       property="og:title"
@@ -20,7 +20,9 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     />
     <style>
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -35,9 +37,14 @@
         --border: #e2e8f0;
         --white: #fff;
         --green: #22c55e;
+        --purple: #8b5cf6;
       }
-      html { scroll-behavior: smooth; }
-      [id] { scroll-margin-top: 76px; }
+      html {
+        scroll-behavior: smooth;
+      }
+      [id] {
+        scroll-margin-top: 76px;
+      }
       body {
         font-family: "Inter", sans-serif;
         color: var(--dark);
@@ -129,7 +136,9 @@
         align-items: center;
         justify-content: center;
       }
-      .logo-ico svg { fill: white; }
+      .logo-ico svg {
+        fill: white;
+      }
       .nav-ul {
         display: flex;
         list-style: none;
@@ -142,7 +151,9 @@
         font-weight: 500;
         transition: color 0.2s;
       }
-      .nav-ul a:hover { color: var(--blue); }
+      .nav-ul a:hover {
+        color: var(--blue);
+      }
       .hbg {
         display: none;
         flex-direction: column;
@@ -160,9 +171,15 @@
         transition: all 0.3s;
         display: block;
       }
-      .hbg.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-      .hbg.open span:nth-child(2) { opacity: 0; }
-      .hbg.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+      .hbg.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hbg.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hbg.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
 
       /* MOBILE MENU */
       .mmenu {
@@ -175,7 +192,9 @@
         padding: 20px 24px 40px;
         overflow-y: auto;
       }
-      .mmenu.open { display: flex; }
+      .mmenu.open {
+        display: flex;
+      }
       .mhead {
         display: flex;
         justify-content: space-between;
@@ -206,7 +225,9 @@
         border-bottom: 1px solid var(--border);
         transition: color 0.2s;
       }
-      .mmenu ul li a:hover { color: var(--blue); }
+      .mmenu ul li a:hover {
+        color: var(--blue);
+      }
       .mlang {
         display: flex;
         gap: 8px;
@@ -265,7 +286,15 @@
         border-radius: 50%;
         animation: pulse 2s infinite;
       }
-      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
       .hero-l h1 {
         font-size: 44px;
         font-weight: 800;
@@ -273,7 +302,9 @@
         margin-bottom: 18px;
         letter-spacing: -0.5px;
       }
-      .hero-l h1 span { color: var(--blue); }
+      .hero-l h1 span {
+        color: var(--blue);
+      }
       .hero-l > p {
         color: var(--gray);
         font-size: 16px;
@@ -304,7 +335,11 @@
         justify-content: center;
         flex-shrink: 0;
       }
-      .chk svg { stroke: white; width: 11px; height: 11px; }
+      .chk svg {
+        stroke: white;
+        width: 11px;
+        height: 11px;
+      }
       .cta-row {
         display: flex;
         gap: 12px;
@@ -331,23 +366,16 @@
         transform: translateY(-1px);
         box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
       }
-      .btn-g {
-        background: transparent;
-        color: var(--dark);
-        padding: 13px 22px;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 15px;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        transition: all 0.2s;
-        border: 1.5px solid var(--border);
+      .snote {
+        font-size: 13px;
+        color: var(--gray);
+        margin-bottom: 10px;
       }
-      .btn-g:hover { border-color: var(--blue); color: var(--blue); }
-      .snote { font-size: 13px; color: var(--gray); margin-bottom: 10px; }
-      .sicons { display: flex; gap: 12px; align-items: center; }
+      .sicons {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
       .sico {
         width: 38px;
         height: 38px;
@@ -360,7 +388,10 @@
         transition: all 0.2s;
         background: #fff;
       }
-      .sico:hover { border-color: var(--blue); box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15); }
+      .sico:hover {
+        border-color: var(--blue);
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+      }
       .hero-r {
         flex: 1;
         display: flex;
@@ -375,19 +406,10 @@
         border: 1px solid var(--border);
         width: 100%;
       }
-      .hero-img img { width: 100%; display: block; }
-      .stat1 {
-        position: absolute;
-        bottom: -8px;
-        left: -16px;
-        background: #fff;
-        border-radius: 14px;
-        padding: 12px 18px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-        border: 1px solid var(--border);
+      .hero-img img {
+        width: 100%;
+        display: block;
       }
-      .stat1 strong { font-size: 22px; font-weight: 800; color: var(--blue); display: block; line-height: 1; }
-      .stat1 span { font-size: 11px; color: var(--gray); }
       .stat2 {
         position: absolute;
         top: 16px;
@@ -397,13 +419,32 @@
         padding: 10px 16px;
         box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
       }
-      .stat2 strong { font-size: 16px; font-weight: 800; color: #fff; display: block; }
-      .stat2 span { font-size: 10px; color: rgba(255, 255, 255, 0.8); }
+      .stat2 strong {
+        font-size: 16px;
+        font-weight: 800;
+        color: #fff;
+        display: block;
+      }
+      .stat2 span {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.8);
+      }
 
       /* ── SHARED ── */
-      .sec { padding: 80px 64px; max-width: 1280px; margin: 0 auto; }
-      .bg-l { background: var(--gray-l); padding: 80px 0; }
-      .si { max-width: 1280px; margin: 0 auto; padding: 0 64px; }
+      .sec {
+        padding: 80px 64px;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .bg-l {
+        background: var(--gray-l);
+        padding: 80px 0;
+      }
+      .si {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 64px;
+      }
       .slabel {
         text-align: center;
         font-size: 11px;
@@ -428,11 +469,13 @@
         margin: 0 auto 56px;
         line-height: 1.75;
       }
-      .scrd { border-radius: 16px; overflow: hidden; box-shadow: 0 16px 48px rgba(15, 23, 42, 0.1); border: 1px solid var(--border); }
-      .scrd img { width: 100%; display: block; }
 
       /* ── FEATURE STRIP ── */
-      .fstrip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+      .fstrip {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+      }
       .fc {
         display: flex;
         flex-direction: column;
@@ -445,7 +488,11 @@
         background: #fff;
         transition: all 0.22s;
       }
-      .fc:hover { border-color: var(--blue); box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1); transform: translateY(-2px); }
+      .fc:hover {
+        border-color: var(--blue);
+        box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+        transform: translateY(-2px);
+      }
       .fi {
         width: 50px;
         height: 50px;
@@ -455,15 +502,42 @@
         align-items: center;
         justify-content: center;
       }
-      .fi svg { stroke: var(--blue); width: 22px; height: 22px; fill: none; stroke-width: 1.9; }
-      .fc h3 { font-size: 14px; font-weight: 700; }
-      .fc p { font-size: 12px; color: var(--gray); line-height: 1.5; }
+      .fi svg {
+        stroke: var(--blue);
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke-width: 1.9;
+      }
+      .fc h3 {
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .fc p {
+        font-size: 12px;
+        color: var(--gray);
+        line-height: 1.5;
+      }
 
       /* ── FEATURES VISUAL ── */
-      .fvlist { display: flex; flex-direction: column; gap: 72px; margin-top: 56px; }
-      .fvrow { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-      .fvrow.rev { direction: rtl; }
-      .fvrow.rev > * { direction: ltr; }
+      .fvlist {
+        display: flex;
+        flex-direction: column;
+        gap: 72px;
+        margin-top: 56px;
+      }
+      .fvrow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .fvrow.rev {
+        direction: rtl;
+      }
+      .fvrow.rev > * {
+        direction: ltr;
+      }
       .fvbadge {
         display: inline-flex;
         align-items: center;
@@ -477,33 +551,122 @@
         margin-bottom: 12px;
         border: 1px solid rgba(37, 99, 235, 0.15);
       }
-      .fvbadge svg { stroke: var(--blue); width: 12px; height: 12px; fill: none; stroke-width: 2; }
-      .fvtext h3 { font-size: 26px; font-weight: 800; margin-bottom: 11px; letter-spacing: -0.3px; }
-      .fvtext p { font-size: 14px; color: var(--gray); line-height: 1.75; margin-bottom: 18px; }
-      .fvbullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
-      .fvbullets li { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; }
-      .fvbullets li::before { content: "✓"; color: var(--blue); font-weight: 800; flex-shrink: 0; }
+      .fvbadge svg {
+        stroke: var(--blue);
+        width: 12px;
+        height: 12px;
+        fill: none;
+        stroke-width: 2;
+      }
+      .fvtext h3 {
+        font-size: 26px;
+        font-weight: 800;
+        margin-bottom: 11px;
+        letter-spacing: -0.3px;
+      }
+      .fvtext p {
+        font-size: 14px;
+        color: var(--gray);
+        line-height: 1.75;
+        margin-bottom: 18px;
+      }
+      .fvbullets {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .fvbullets li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .fvbullets li::before {
+        content: "✓";
+        color: var(--blue);
+        font-weight: 800;
+        flex-shrink: 0;
+      }
+
       .fvscr {
         border-radius: 20px;
         overflow: hidden;
         box-shadow: 0 24px 64px rgba(15, 23, 42, 0.11);
         border: 1px solid var(--border);
-        transition: transform 0.3s, box-shadow 0.3s;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        background: var(--gray-l); /* Shown behind images */
       }
-      .fvscr:hover { transform: translateY(-4px); box-shadow: 0 32px 80px rgba(15, 23, 42, 0.16); }
-      .fvscr img { width: 100%; display: block; }
+      .fvscr:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 32px 80px rgba(15, 23, 42, 0.16);
+      }
+
+      /* Standard single image wrapper */
+      .fvscr img {
+        width: 100%;
+        display: block;
+      }
+
+      /* Double image stack for automation */
+      .fvscr.stack {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 4px;
+      }
+      .fvscr.stack img {
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
 
       /* ── DASHBOARD ── */
       .dash-bg {
-        background: linear-gradient(160deg, #eff6ff 0%, var(--gray-l) 55%, #eff6ff 100%);
+        background: linear-gradient(
+          160deg,
+          #eff6ff 0%,
+          var(--gray-l) 55%,
+          #eff6ff 100%
+        );
         padding: 80px 0;
       }
-      .di { max-width: 1280px; margin: 0 auto; padding: 0 64px; }
-      .dtop { display: flex; align-items: flex-start; justify-content: space-between; gap: 48px; margin-bottom: 44px; flex-wrap: wrap; }
-      .dtext { flex: 1; min-width: 280px; }
-      .dtext h2 { font-size: 36px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 12px; }
-      .dtext p { color: var(--gray); font-size: 15px; line-height: 1.75; margin-bottom: 22px; }
-      .dtags { display: flex; gap: 8px; flex-wrap: wrap; }
+      .di {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 64px;
+      }
+      .dtop {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 48px;
+        margin-bottom: 44px;
+        flex-wrap: wrap;
+      }
+      .dtext {
+        flex: 1;
+        min-width: 280px;
+      }
+      .dtext h2 {
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: -0.4px;
+        margin-bottom: 12px;
+      }
+      .dtext p {
+        color: var(--gray);
+        font-size: 15px;
+        line-height: 1.75;
+        margin-bottom: 22px;
+      }
+      .dtags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
       .dtag {
         background: #fff;
         border: 1.5px solid var(--border);
@@ -516,16 +679,54 @@
         gap: 5px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
       }
-      .dtag svg { stroke: var(--blue); width: 12px; height: 12px; fill: none; stroke-width: 2; }
-      .dstats { display: flex; gap: 32px; flex-shrink: 0; }
-      .dstat strong { font-size: 28px; font-weight: 800; color: var(--blue); display: block; }
-      .dstat span { font-size: 12px; color: var(--gray); }
-      .dimg { border-radius: 20px; overflow: hidden; box-shadow: 0 32px 100px rgba(37, 99, 235, 0.16); border: 1px solid var(--border); }
-      .dimg img { width: 100%; display: block; }
+      .dtag svg {
+        stroke: var(--blue);
+        width: 12px;
+        height: 12px;
+        fill: none;
+        stroke-width: 2;
+      }
+      .dstats {
+        display: flex;
+        gap: 32px;
+        flex-shrink: 0;
+      }
+      .dstat strong {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--blue);
+        display: block;
+      }
+      .dstat span {
+        font-size: 12px;
+        color: var(--gray);
+      }
+      .dimg {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 32px 100px rgba(37, 99, 235, 0.16);
+        border: 1px solid var(--border);
+      }
+      .dimg img {
+        width: 100%;
+        display: block;
+      }
 
       /* ── STEPS ── */
-      .stepsw { display: flex; align-items: flex-start; justify-content: center; flex-wrap: nowrap; }
-      .step { display: flex; flex-direction: column; align-items: center; text-align: center; width: 152px; flex-shrink: 0; }
+      .stepsw {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+      .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 152px;
+        flex-shrink: 0;
+      }
       .snum {
         width: 44px;
         height: 44px;
@@ -551,13 +752,39 @@
         margin-bottom: 10px;
         border: 1px solid rgba(37, 99, 235, 0.1);
       }
-      .sico svg { stroke: var(--blue); width: 26px; height: 26px; fill: none; stroke-width: 1.8; }
-      .step h4 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
-      .step p { font-size: 11px; color: var(--gray); line-height: 1.55; }
-      .sarr { display: flex; align-items: center; margin-top: 54px; color: #cbd5e1; font-size: 22px; padding: 0 2px; flex-shrink: 0; }
+      .sico svg {
+        stroke: var(--blue);
+        width: 26px;
+        height: 26px;
+        fill: none;
+        stroke-width: 1.8;
+      }
+      .step h4 {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+      .step p {
+        font-size: 11px;
+        color: var(--gray);
+        line-height: 1.55;
+      }
+      .sarr {
+        display: flex;
+        align-items: center;
+        margin-top: 54px;
+        color: #cbd5e1;
+        font-size: 22px;
+        padding: 0 2px;
+        flex-shrink: 0;
+      }
 
       /* ── CTA ── */
-      .ctaw { max-width: 1152px; margin: 0 auto 80px; padding: 0 64px; }
+      .ctaw {
+        max-width: 1152px;
+        margin: 0 auto 80px;
+        padding: 0 64px;
+      }
       .ctab {
         background: linear-gradient(135deg, #1d4ed8, #2563eb, #3b82f6);
         border-radius: 22px;
@@ -579,9 +806,23 @@
         background: rgba(255, 255, 255, 0.07);
         border-radius: 50%;
       }
-      .ctal { flex: 1; position: relative; z-index: 1; }
-      .ctab h2 { text-align: left; color: #fff; font-size: 30px; margin-bottom: 10px; font-weight: 800; }
-      .ctab p { color: rgba(255, 255, 255, 0.82); font-size: 15px; line-height: 1.65; }
+      .ctal {
+        flex: 1;
+        position: relative;
+        z-index: 1;
+      }
+      .ctab h2 {
+        text-align: left;
+        color: #fff;
+        font-size: 30px;
+        margin-bottom: 10px;
+        font-weight: 800;
+      }
+      .ctab p {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 15px;
+        line-height: 1.65;
+      }
       .btnw {
         background: #fff;
         color: var(--blue);
@@ -600,10 +841,16 @@
         z-index: 1;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
       }
-      .btnw:hover { box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2); transform: translateY(-1px); }
+      .btnw:hover {
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+        transform: translateY(-1px);
+      }
 
       /* ── FOOTER ── */
-      footer { background: var(--dark); padding: 60px 64px 32px; }
+      footer {
+        background: var(--dark);
+        padding: 60px 64px 32px;
+      }
       .fgrid {
         max-width: 1280px;
         margin: 0 auto 40px;
@@ -611,13 +858,46 @@
         grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
         gap: 40px;
       }
-      .fbrand .logo { color: #fff; margin-bottom: 10px; display: inline-flex; }
-      .fbrand p { font-size: 13px; color: #94a3b8; line-height: 1.65; max-width: 220px; margin-top: 6px; }
-      .fcol h5 { font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.07em; }
-      .fcol ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-      .fcol ul a { text-decoration: none; font-size: 13px; color: #cbd5e1; transition: color 0.2s; }
-      .fcol ul a:hover { color: #fff; }
-      .slinks { display: flex; gap: 10px; margin-top: 14px; }
+      .fbrand .logo {
+        color: #fff;
+        margin-bottom: 10px;
+        display: inline-flex;
+      }
+      .fbrand p {
+        font-size: 13px;
+        color: #94a3b8;
+        line-height: 1.65;
+        max-width: 220px;
+        margin-top: 6px;
+      }
+      .fcol h5 {
+        font-size: 11px;
+        font-weight: 700;
+        color: #94a3b8;
+        margin-bottom: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+      }
+      .fcol ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .fcol ul a {
+        text-decoration: none;
+        font-size: 13px;
+        color: #cbd5e1;
+        transition: color 0.2s;
+      }
+      .fcol ul a:hover {
+        color: #fff;
+      }
+      .slinks {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+      }
       .slnk {
         width: 36px;
         height: 36px;
@@ -632,7 +912,11 @@
         font-weight: 700;
         transition: all 0.2s;
       }
-      .slnk:hover { border-color: var(--blue); color: #fff; background: var(--blue); }
+      .slnk:hover {
+        border-color: var(--blue);
+        color: #fff;
+        background: var(--blue);
+      }
       .fbot {
         max-width: 1280px;
         margin: 0 auto;
@@ -644,60 +928,177 @@
         flex-wrap: wrap;
         gap: 10px;
       }
-      .fbot p { font-size: 12px; color: #475569; }
-      .flinks { display: flex; gap: 20px; }
-      .flinks a { font-size: 12px; color: #475569; text-decoration: none; transition: color 0.2s; }
-      .flinks a:hover { color: #94a3b8; }
+      .fbot p {
+        font-size: 12px;
+        color: #475569;
+      }
+      .flinks {
+        display: flex;
+        gap: 20px;
+      }
+      .flinks a {
+        font-size: 12px;
+        color: #475569;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .flinks a:hover {
+        color: #94a3b8;
+      }
 
       /* ── RESPONSIVE ── */
       @media (max-width: 1200px) {
-        .fstrip { grid-template-columns: repeat(2, 1fr); }
-        .fgrid { grid-template-columns: 1fr 1fr 1fr 1fr; gap: 28px; }
-        .fbrand { grid-column: 1/-1; }
+        .fstrip {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .fgrid {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          gap: 28px;
+        }
+        .fbrand {
+          grid-column: 1/-1;
+        }
       }
       @media (max-width: 1024px) {
-        nav, .lbar, .sec, .si, .di, .ctaw, footer { padding-left: 32px; padding-right: 32px; }
-        .hero { padding: 60px 32px 48px; gap: 40px; }
-        .fvrow { gap: 36px; }
-        .dtop { gap: 32px; }
+        nav,
+        .lbar,
+        .sec,
+        .si,
+        .di,
+        .ctaw,
+        footer {
+          padding-left: 32px;
+          padding-right: 32px;
+        }
+        .hero {
+          padding: 60px 32px 48px;
+          gap: 40px;
+        }
+        .fvrow {
+          gap: 36px;
+        }
+        .dtop {
+          gap: 32px;
+        }
       }
       @media (max-width: 900px) {
-        .fvrow, .fvrow.rev { grid-template-columns: 1fr; direction: ltr; }
-        .fvrow.rev > * { direction: ltr; }
-        .dtop { flex-direction: column; }
-        .stepsw { flex-wrap: wrap; gap: 20px; justify-content: center; }
-        .sarr { display: none; }
-        .step { width: 140px; }
+        .fvrow,
+        .fvrow.rev {
+          grid-template-columns: 1fr;
+          direction: ltr;
+        }
+        .fvrow.rev > * {
+          direction: ltr;
+        }
+        .dtop {
+          flex-direction: column;
+        }
+        .stepsw {
+          flex-wrap: wrap;
+          gap: 20px;
+          justify-content: center;
+        }
+        .sarr {
+          display: none;
+        }
+        .step {
+          width: 140px;
+        }
       }
       @media (max-width: 768px) {
-        nav { padding: 0 16px; height: 60px; }
-        .lbar { padding: 6px 16px; }
-        .ann { font-size: 12px; padding: 8px 16px; }
-        .nav-ul { display: none; }
-        .hbg { display: flex; }
-        .hero { flex-direction: column; padding: 36px 16px 48px; gap: 32px; }
-        .hero-l { max-width: 100%; }
-        .hero-l h1 { font-size: 28px; }
-        .stat1, .stat2 { display: none; }
-        .sec { padding: 52px 16px; }
-        .bg-l { padding: 52px 0; }
-        .si { padding: 0 16px; }
-        .di { padding: 0 16px; }
-        .ctaw { padding: 0 16px; margin-bottom: 48px; }
-        footer { padding: 48px 16px 28px; }
-        .sh2 { font-size: 26px; }
-        .fstrip { grid-template-columns: 1fr; }
-        .ctab { flex-direction: column; padding: 36px 24px; border-radius: 16px; }
-        .ctab h2 { font-size: 22px; }
-        .btnw { width: 100%; justify-content: center; }
-        .fgrid { grid-template-columns: 1fr 1fr; gap: 24px; }
-        .fbrand { grid-column: 1/-1; }
-        .fbot { flex-direction: column; text-align: center; }
+        nav {
+          padding: 0 16px;
+          height: 60px;
+        }
+        .lbar {
+          padding: 6px 16px;
+        }
+        .ann {
+          font-size: 12px;
+          padding: 8px 16px;
+        }
+        .nav-ul {
+          display: none;
+        }
+        .hbg {
+          display: flex;
+        }
+        .hero {
+          flex-direction: column;
+          padding: 36px 16px 48px;
+          gap: 32px;
+        }
+        .hero-l {
+          max-width: 100%;
+        }
+        .hero-l h1 {
+          font-size: 28px;
+        }
+        .stat2 {
+          display: none;
+        }
+        .sec {
+          padding: 52px 16px;
+        }
+        .bg-l {
+          padding: 52px 0;
+        }
+        .si {
+          padding: 0 16px;
+        }
+        .di {
+          padding: 0 16px;
+        }
+        .ctaw {
+          padding: 0 16px;
+          margin-bottom: 48px;
+        }
+        footer {
+          padding: 48px 16px 28px;
+        }
+        .sh2 {
+          font-size: 26px;
+        }
+        .fstrip {
+          grid-template-columns: 1fr 1fr;
+        }
+        .ctab {
+          flex-direction: column;
+          padding: 36px 24px;
+          border-radius: 16px;
+        }
+        .ctab h2 {
+          font-size: 22px;
+        }
+        .btnw {
+          width: 100%;
+          justify-content: center;
+        }
+        .fgrid {
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+        }
+        .fbrand {
+          grid-column: 1/-1;
+        }
+        .fbot {
+          flex-direction: column;
+          text-align: center;
+        }
       }
       @media (max-width: 480px) {
-        .hero-l h1 { font-size: 24px; }
-        .sh2 { font-size: 22px; }
-        .fgrid { grid-template-columns: 1fr; }
+        .hero-l h1 {
+          font-size: 24px;
+        }
+        .sh2 {
+          font-size: 22px;
+        }
+        .fstrip {
+          grid-template-columns: 1fr;
+        }
+        .fgrid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -705,8 +1106,16 @@
     <div class="ann"><span data-i18n="ann"></span></div>
 
     <div class="lbar">
-      <button class="lbtn active" onclick="setLang('az')" aria-label="Azərbaycan dili">AZ</button>
-      <button class="lbtn" onclick="setLang('en')" aria-label="English">EN</button>
+      <button
+        class="lbtn active"
+        onclick="setLang('az')"
+        aria-label="Azərbaycan dili"
+      >
+        AZ
+      </button>
+      <button class="lbtn" onclick="setLang('en')" aria-label="English">
+        EN
+      </button>
     </div>
 
     <nav role="navigation" aria-label="Main">
@@ -735,7 +1144,9 @@
         <a href="#" class="logo" onclick="toggleMenu()">
           <div class="logo-ico">
             <svg width="18" height="18" viewBox="0 0 24 24">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              />
             </svg>
           </div>
           corp-bridge
@@ -743,15 +1154,43 @@
         <button class="mclose" onclick="toggleMenu()">×</button>
       </div>
       <ul>
-        <li><a href="#features" data-i18n="nav.feat" onclick="toggleMenu()"></a></li>
-        <li><a href="#showcase" data-i18n="nav.plat" onclick="toggleMenu()"></a></li>
-        <li><a href="#howto" data-i18n="nav.how" onclick="toggleMenu()"></a></li>
-        <li><a href="#audience" data-i18n="nav.aud" onclick="toggleMenu()"></a></li>
-        <li><a href="#contact" data-i18n="nav.con" onclick="toggleMenu()"></a></li>
+        <li>
+          <a href="#features" data-i18n="nav.feat" onclick="toggleMenu()"></a>
+        </li>
+        <li>
+          <a href="#showcase" data-i18n="nav.plat" onclick="toggleMenu()"></a>
+        </li>
+        <li>
+          <a href="#howto" data-i18n="nav.how" onclick="toggleMenu()"></a>
+        </li>
+        <li>
+          <a href="#audience" data-i18n="nav.aud" onclick="toggleMenu()"></a>
+        </li>
+        <li>
+          <a href="#contact" data-i18n="nav.con" onclick="toggleMenu()"></a>
+        </li>
       </ul>
       <div class="mlang">
-        <button class="mlbtn active" id="mlaz" onclick="setLang('az'); syncMl();">AZ</button>
-        <button class="mlbtn" id="mlen" onclick="setLang('en'); syncMl();">EN</button>
+        <button
+          class="mlbtn active"
+          id="mlaz"
+          onclick="
+            setLang('az');
+            syncMl();
+          "
+        >
+          AZ
+        </button>
+        <button
+          class="mlbtn"
+          id="mlen"
+          onclick="
+            setLang('en');
+            syncMl();
+          "
+        >
+          EN
+        </button>
       </div>
     </div>
 
@@ -770,28 +1209,56 @@
         <p class="snote" data-i18n="hero.plat"></p>
         <div class="sicons">
           <div class="sico" title="Web">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#64748B"
+              stroke-width="1.8"
+            >
               <circle cx="12" cy="12" r="10" />
               <line x1="2" y1="12" x2="22" y2="12" />
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              <path
+                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+              />
             </svg>
           </div>
           <div class="sico" title="Google Play">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#64748B"
+              stroke-width="1.8"
+            >
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
           </div>
           <div class="sico" title="App Store">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8">
-              <path d="M12 19.5C8.5 19.5 6 17 6 13.5c0-2.5 1.5-4.5 3-5.5M12 4.5c3.5 0 6 2.5 6 6s-2.5 5-6 5M9 9l3-5 3 5" />
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#64748B"
+              stroke-width="1.8"
+            >
+              <path
+                d="M12 19.5C8.5 19.5 6 17 6 13.5c0-2.5 1.5-4.5 3-5.5M12 4.5c3.5 0 6 2.5 6 6s-2.5 5-6 5M9 9l3-5 3 5"
+              />
             </svg>
           </div>
         </div>
       </div>
       <div class="hero-r">
         <div class="hero-img">
-          <!-- Yenilənmiş Hero Şəkli (Marketplace) -->
-          <img src="images/marketplace.jpg" alt="corp-bridge dashboard" loading="eager" />
+          <img
+            src="images/marketplace.jpg"
+            alt="corp-bridge dashboard"
+            loading="eager"
+          />
         </div>
         <div class="stat2">
           <strong>100%</strong><span data-i18n="hero.free"></span>
@@ -806,7 +1273,6 @@
         <h2 class="sh2" data-i18n="fs.h2"></h2>
         <p class="ssub" data-i18n="fs.sub"></p>
         <div class="fstrip">
-          <!-- 1. Marketplace -->
           <div class="fc">
             <div class="fi">
               <svg viewBox="0 0 24 24">
@@ -818,21 +1284,23 @@
             <h3>Marketplace</h3>
             <p data-i18n="fs.f1"></p>
           </div>
-          <!-- 2. Mesajlaşma -->
           <div class="fc">
             <div class="fi">
               <svg viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                <path
+                  d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                />
               </svg>
             </div>
             <h3 data-i18n="fs.h3"></h3>
             <p data-i18n="fs.f3"></p>
           </div>
-          <!-- 3. Stock -->
           <div class="fc">
             <div class="fi">
               <svg viewBox="0 0 24 24">
-                <path d="M20 7h-8.5l-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+                <path
+                  d="M20 7h-8.5l-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"
+                />
                 <line x1="12" y1="11" x2="12" y2="15" />
                 <line x1="10" y1="13" x2="14" y2="13" />
               </svg>
@@ -840,7 +1308,27 @@
             <h3 data-i18n="fs.stock"></h3>
             <p data-i18n="fs.fstock"></p>
           </div>
-          <!-- 4. Tasks -->
+          <div class="fc">
+            <div class="fi">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path
+                  d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                />
+              </svg>
+            </div>
+            <h3 data-i18n="fs.wiki"></h3>
+            <p data-i18n="fs.fwiki"></p>
+          </div>
+          <div class="fc">
+            <div class="fi">
+              <svg viewBox="0 0 24 24">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+              </svg>
+            </div>
+            <h3 data-i18n="fs.automation"></h3>
+            <p data-i18n="fs.fautomation"></p>
+          </div>
           <div class="fc">
             <div class="fi">
               <svg viewBox="0 0 24 24">
@@ -852,7 +1340,6 @@
             <h3 data-i18n="fs.tasks"></h3>
             <p data-i18n="fs.ftasks"></p>
           </div>
-          <!-- 5. HR -->
           <div class="fc">
             <div class="fi">
               <svg viewBox="0 0 24 24">
@@ -865,7 +1352,6 @@
             <h3 data-i18n="fs.hr"></h3>
             <p data-i18n="fs.fhr"></p>
           </div>
-          <!-- 6. Payroll -->
           <div class="fc">
             <div class="fi">
               <svg viewBox="0 0 24 24">
@@ -877,21 +1363,12 @@
             <h3 data-i18n="fs.payroll"></h3>
             <p data-i18n="fs.fpayroll"></p>
           </div>
-          <!-- 7. Sənədlər -->
           <div class="fc">
             <div class="fi">
               <svg viewBox="0 0 24 24">
-                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-              </svg>
-            </div>
-            <h3 data-i18n="fs.h4"></h3>
-            <p data-i18n="fs.f4"></p>
-          </div>
-          <!-- 8. Sosial Lent -->
-          <div class="fc">
-            <div class="fi">
-              <svg viewBox="0 0 24 24">
-                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                <path
+                  d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"
+                />
                 <line x1="4" y1="22" x2="4" y2="15" />
               </svg>
             </div>
@@ -903,12 +1380,67 @@
     </div>
 
     <!-- FEATURES VISUAL -->
-    <div class="sec" style="max-width: 1280px; margin: 0 auto; padding: 80px 64px">
+    <div
+      class="sec"
+      style="max-width: 1280px; margin: 0 auto; padding: 80px 64px"
+    >
       <p class="slabel" data-i18n="fv.lbl"></p>
       <h2 class="sh2" data-i18n="fv.h2"></h2>
       <p class="ssub" data-i18n="fv.sub"></p>
       <div class="fvlist">
-        
+        <!-- Wiki & Versioning -->
+        <div class="fvrow">
+          <div class="fvtext">
+            <div class="fvbadge">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path
+                  d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                />
+              </svg>
+              <span data-i18n="fs.wiki"></span>
+            </div>
+            <h3 data-i18n="fv.wikih"></h3>
+            <p data-i18n="fv.wikip"></p>
+            <ul class="fvbullets" id="fvbWiki"></ul>
+          </div>
+          <div class="fvscr">
+            <img
+              src="images/wiki-version-history.jpg"
+              alt="Wiki & Version History"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Automation (YENİ) -->
+        <div class="fvrow rev">
+          <div class="fvtext">
+            <div class="fvbadge">
+              <svg viewBox="0 0 24 24">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+              </svg>
+              <span data-i18n="fs.automation"></span>
+            </div>
+            <h3 data-i18n="fv.autoh"></h3>
+            <p data-i18n="fv.autop"></p>
+            <ul class="fvbullets" id="fvbAuto"></ul>
+          </div>
+          <div class="fvscr stack">
+            <!-- Hər iki şəkil bir yerdə göstərilir -->
+            <img
+              src="images/automation-trigger.jpg"
+              alt="Automation Trigger"
+              loading="lazy"
+            />
+            <img
+              src="images/automation-actions.jpg"
+              alt="Automation Actions"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
         <!-- Marketplace -->
         <div class="fvrow">
           <div class="fvtext">
@@ -925,7 +1457,11 @@
             <ul class="fvbullets" id="fvb1"></ul>
           </div>
           <div class="fvscr">
-            <img src="images/marketplace.jpg" alt="Marketplace" loading="lazy" />
+            <img
+              src="images/marketplace.jpg"
+              alt="Marketplace"
+              loading="lazy"
+            />
           </div>
         </div>
 
@@ -934,7 +1470,9 @@
           <div class="fvtext">
             <div class="fvbadge">
               <svg viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                <path
+                  d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                />
               </svg>
               <span data-i18n="fs.h3"></span>
             </div>
@@ -952,7 +1490,9 @@
           <div class="fvtext">
             <div class="fvbadge">
               <svg viewBox="0 0 24 24">
-                <path d="M20 7h-8.5l-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+                <path
+                  d="M20 7h-8.5l-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"
+                />
               </svg>
               <span data-i18n="fs.stock"></span>
             </div>
@@ -1000,7 +1540,11 @@
             <ul class="fvbullets" id="fvbHR"></ul>
           </div>
           <div class="fvscr">
-            <img src="images/hr-leaves.jpg" alt="HR & Leave Management" loading="lazy" />
+            <img
+              src="images/hr-leaves.jpg"
+              alt="HR & Leave Management"
+              loading="lazy"
+            />
           </div>
         </div>
 
@@ -1028,7 +1572,9 @@
           <div class="fvtext">
             <div class="fvbadge">
               <svg viewBox="0 0 24 24">
-                <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z" />
+                <path
+                  d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z"
+                />
                 <circle cx="12" cy="12" r="3" />
               </svg>
               <span data-i18n="fs.settings"></span>
@@ -1038,7 +1584,11 @@
             <ul class="fvbullets" id="fvbSettings"></ul>
           </div>
           <div class="fvscr">
-            <img src="images/settings-team.jpg" alt="Team Settings" loading="lazy" />
+            <img
+              src="images/settings-team.jpg"
+              alt="Team Settings"
+              loading="lazy"
+            />
           </div>
         </div>
 
@@ -1047,7 +1597,9 @@
           <div class="fvtext">
             <div class="fvbadge">
               <svg viewBox="0 0 24 24">
-                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                <path
+                  d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"
+                />
                 <line x1="4" y1="22" x2="4" y2="15" />
               </svg>
               Feed
@@ -1060,7 +1612,6 @@
             <img src="images/feed.jpg" alt="Feed" loading="lazy" />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -1082,7 +1633,9 @@
               </div>
               <div class="dtag">
                 <svg viewBox="0 0 24 24">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  <path
+                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                  />
                 </svg>
                 <span data-i18n="fs.h3"></span>
               </div>
@@ -1104,7 +1657,7 @@
           </div>
           <div class="dstats">
             <div class="dstat">
-              <strong>8+</strong><span data-i18n="ds.s1"></span>
+              <strong>9+</strong><span data-i18n="ds.s1"></span>
             </div>
             <div class="dstat">
               <strong>100%</strong><span data-i18n="ds.s2"></span>
@@ -1115,14 +1668,21 @@
           </div>
         </div>
         <div class="dimg">
-          <!-- Dashboard üçün HR Admin şəkli -->
-          <img src="images/hr-admin.jpg" alt="corp-bridge web dashboard" loading="lazy" />
+          <img
+            src="images/hr-admin.jpg"
+            alt="corp-bridge web dashboard"
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
 
     <!-- HOW IT WORKS -->
-    <div class="sec" id="howto" style="max-width: 1280px; margin: 0 auto; padding: 80px 64px">
+    <div
+      class="sec"
+      id="howto"
+      style="max-width: 1280px; margin: 0 auto; padding: 80px 64px"
+    >
       <p class="slabel" data-i18n="hw.lbl"></p>
       <h2 class="sh2" data-i18n="hw.h2"></h2>
       <p class="ssub" data-i18n="hw.sub"></p>
@@ -1170,8 +1730,12 @@
           <div class="snum">4</div>
           <div class="sico">
             <svg viewBox="0 0 24 24">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              <path
+                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+              />
+              <path
+                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+              />
             </svg>
           </div>
           <h4 data-i18n="hw.s4h"></h4>
@@ -1199,7 +1763,7 @@
         <p class="slabel" data-i18n="au.lbl"></p>
         <h2 class="sh2" data-i18n="au.h2"></h2>
         <p class="ssub" data-i18n="au.sub"></p>
-        <div class="fstrip" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="fstrip" style="grid-template-columns: repeat(3, 1fr)">
           <div class="fc">
             <div class="fi">
               <svg viewBox="0 0 24 24">
@@ -1215,7 +1779,9 @@
               <svg viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="2" y1="12" x2="22" y2="12" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                <path
+                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                />
               </svg>
             </div>
             <h3 data-i18n="au.a2h"></h3>
@@ -1257,7 +1823,9 @@
           <a href="#" class="logo">
             <div class="logo-ico">
               <svg width="18" height="18" viewBox="0 0 24 24">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                <path
+                  d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                />
               </svg>
             </div>
             corp-bridge
@@ -1274,8 +1842,8 @@
             <li><a href="#" data-i18n="fs.h3"></a></li>
             <li><a href="#">Marketplace</a></li>
             <li><a href="#">RFQ</a></li>
-            <li><a href="#" data-i18n="fs.h5"></a></li>
-            <li><a href="#" data-i18n="fs.h4"></a></li>
+            <li><a href="#" data-i18n="fs.automation"></a></li>
+            <li><a href="#" data-i18n="fs.wiki"></a></li>
           </ul>
         </div>
         <div class="fcol">
@@ -1293,12 +1861,17 @@
             <li><a href="#" data-i18n="ft.hlp"></a></li>
             <li><a href="#" data-i18n="ft.trm"></a></li>
             <li><a href="#" data-i18n="ft.prv"></a></li>
-            <li><a href="mailto:contact@corp-bridge.com" data-i18n="nav.con"></a></li>
+            <li>
+              <a href="mailto:contact@corp-bridge.com" data-i18n="nav.con"></a>
+            </li>
           </ul>
         </div>
         <div class="fcol">
           <h5 data-i18n="ft.f"></h5>
-          <p style="font-size: 13px; color: #94a3b8; line-height: 1.6" data-i18n="ft.fsub"></p>
+          <p
+            style="font-size: 13px; color: #94a3b8; line-height: 1.6"
+            data-i18n="ft.fsub"
+          ></p>
         </div>
       </div>
       <div class="fbot">
@@ -1319,26 +1892,34 @@
           "nav.aud": "Haqqımızda",
           "nav.con": "Əlaqə",
           "hero.badge": "🚀 B2B Platforma — pulsuz qeydiyyat",
-          "hero.title": "Bütün biznes əlaqələriniz <span style='color:#2563EB'>bir platformada.</span>",
-          "hero.sub": "Şirkətinizi tanıdın, yeni partnyorlar tapın, məhsul və xidmətlərinizi təqdim edin, birlikdə böyüyün.",
+          "hero.title":
+            "Bütün biznes əlaqələriniz <span style='color:#2563EB'>bir platformada.</span>",
+          "hero.sub":
+            "Şirkətinizi tanıdın, yeni partnyorlar tapın, məhsul və xidmətlərinizi təqdim edin, birlikdə böyüyün.",
           "hero.cl": [
             "Marketplace – məhsul və xidmətlər",
             "Mesajlaşma və Feed",
             "Stock və Tapşırıqlar (Tasks)",
             "HR, Payroll və Komanda İdarəetməsi",
-            "Sənəd dövriyyəsi və tenderlər"
+            "Wiki, AI, Avtomatlaşdırma və Versiyalaşdırma",
           ],
           "hero.cta": "Pulsuz qeydiyyat",
           "hero.plat": "Veb, Android və iOS — tezliklə",
           "hero.free": "Pulsuz",
           "fs.lbl": "PLATFORMA",
           "fs.h2": "Bütün B2B ehtiyaclarınız bir yerdə",
-          "fs.sub": "Biznesinizi idarə etmək, partnyorlar tapmaq və böyümək üçün lazım olan hər şey.",
+          "fs.sub":
+            "Biznesinizi idarə etmək, partnyorlar tapmaq və böyümək üçün lazım olan hər şey.",
           "fs.f1": "Məhsul və xidmətlər yerləşdirin, yeni müştərilər tapın.",
           "fs.h3": "Mesajlaşma",
           "fs.f3": "Şirkətlərlə birbaşa əlaqə qurun.",
           "fs.stock": "Stock İdarəetməsi",
           "fs.fstock": "İnventar, anbar və stok hərəkətlərini izləyin.",
+          "fs.wiki": "Wiki & AI",
+          "fs.fwiki": "Bilik bazası, AI xülasələri və versiyalaşdırma.",
+          "fs.automation": "Avtomatlaşdırma",
+          "fs.fautomation":
+            "Trigger, şərtlər və fəaliyyətlər ilə iş axınlarını qurun.",
           "fs.tasks": "Tapşırıqlar",
           "fs.ftasks": "Kanban lövhələri ilə komanda işlərini idarə edin.",
           "fs.hr": "İnsan Resursları",
@@ -1354,41 +1935,88 @@
           "fs.settings": "Tənzimləmələr",
           "fv.lbl": "EKRAN GÖRÜNTÜLƏRİ",
           "fv.h2": "Real interfeys, real imkanlar",
-          "fv.sub": "Platformanın hər modulunu real ekran görüntüləri ilə tanıyın.",
+          "fv.sub":
+            "Platformanın hər modulunu real ekran görüntüləri ilə tanıyın.",
+          "fv.wikih": "Bilik Bazası, AI və Versiyalaşdırma",
+          "fv.wikip":
+            "Şirkət sənədlərini, qaydaları və bilikləri idarə edin. Süni intellekt (AI) köməyi ilə sənədləri qısaca ümumiləşdirin (Summarize) və hər bir dəyişikliyin tarixçəsini (Version History) izləyin.",
+          "fv.wikib": [
+            "AI ilə xülasə (Summarize)",
+            "Versiya tarixçəsi (Versioning)",
+            "Tapşırıqlarla əlaqələndirmə (Linked to Task)",
+          ],
+          "fv.autoh": "İş axınlarını avtomatlaşdırın",
+          "fv.autop":
+            "Təkrarlanan işləri avtomatlaşdırın. 'Trigger' (Tetikleyici) ilə başlayan prosesləri şərtlərə uyğun olaraq 'Actions' (Fəaliyyətlər) ilə tamamlayın. Məsələn, task yaranan kimi avtomatik təyin edin və bildiriş göndərin.",
+          "fv.autob": [
+            "Task yaradıldıqda tetiklə",
+            "Avtomatik istifadəçi təyini",
+            "In-app, Email və Slack bildirişləri",
+          ],
           "fv.f1h": "Məhsul və xidmətlərinizi satın",
-          "fv.f1p": "Qlobal B2B marketplacedə məhsul və xidmətlərinizi yerləşdirin, müştərilərdən birbaşa təklif alın.",
-          "fv.b1": ["Kateqoriya üzrə axtarış", "MOQ və qiymət göstərin", "Birbaşa RFQ alın"],
+          "fv.f1p":
+            "Qlobal B2B marketplacedə məhsul və xidmətlərinizi yerləşdirin, müştərilərdən birbaşa təklif alın.",
+          "fv.b1": [
+            "Kateqoriya üzrə axtarış",
+            "MOQ və qiymət göstərin",
+            "Birbaşa RFQ alın",
+          ],
           "fv.f2h": "Real vaxtda birbaşa yazışın",
-          "fv.f2p": "Şirkətlərlə çat vasitəsilə əlaqə qurun, sənəd göndərin, müqavilə müzakirə edin.",
+          "fv.f2p":
+            "Şirkətlərlə çat vasitəsilə əlaqə qurun, sənəd göndərin, müqavilə müzakirə edin.",
           "fv.b2": ["Fayl göndərin", "Daxili və Xarici çat", "Çoxlu söhbət"],
           "fv.stockh": "Anbar və Stok hərəkətləri",
-          "fv.stockp": "Məhsullarınızı, anbarları və stok hərəkətlərini bir yerdən izləyin.",
-          "fv.stockb": ["Məhsul əlavə edin", "Stok analitikası", "Anbar idarəetməsi"],
+          "fv.stockp":
+            "Məhsullarınızı, anbarları və stok hərəkətlərini bir yerdən izləyin.",
+          "fv.stockb": [
+            "Məhsul əlavə edin",
+            "Stok analitikası",
+            "Anbar idarəetməsi",
+          ],
           "fv.tasksh": "Kanban ilə tapşırıqları idarə edin",
-          "fv.tasksp": "Komandanız üçün lövhələr yaradın, tapşırıqları sütunlar üzrə hərəkət etdirin.",
-          "fv.tasksb": ["To Do, In Progress, Done", "Komanda üzvlərini təyin edin", "Analitika və Timeline"],
+          "fv.tasksp":
+            "Komandanız üçün lövhələr yaradın, tapşırıqları sütunlar üzrə hərəkət etdirin.",
+          "fv.tasksb": [
+            "To Do, In Progress, Done",
+            "Komanda üzvlərini təyin edin",
+            "Analitika və Timeline",
+          ],
           "fv.hrh": "HR və Məzuniyyət İdarəetməsi",
-          "fv.hrp": "İşçilərin məzuniyyət balanslarını izləyin, sorğuları təsdiqləyin.",
-          "fv.hrb": ["İllik, Xəstəlik məzuniyyəti", "Komanda təqvimi", "İşçi profilləri"],
+          "fv.hrp":
+            "İşçilərin məzuniyyət balanslarını izləyin, sorğuları təsdiqləyin.",
+          "fv.hrb": [
+            "İllik, Xəstəlik məzuniyyəti",
+            "Komanda təqvimi",
+            "İşçi profilləri",
+          ],
           "fv.payrollh": "Əməkhaqqı və Ödənişlər",
-          "fv.payrollp": "Əməkhaqqı qaydalarını qurun, maaşları hesablayın və ödənişləri idarə edin.",
+          "fv.payrollp":
+            "Əməkhaqqı qaydalarını qurun, maaşları hesablayın və ödənişləri idarə edin.",
           "fv.payrollb": ["Rule Sets", "İşçi maaşları", "Payroll Runs"],
           "fv.settingsh": "Komanda və İcazələr",
-          "fv.settingsp": "Komanda üzvlərini dəvət edin, rolları (Owner, Admin, Member) təyin edin.",
-          "fv.settingsb": ["İstifadəçi dəvəti", "Rol idarəetməsi", "Təhlükəsizlik"],
+          "fv.settingsp":
+            "Komanda üzvlərini dəvət edin, rolları (Owner, Admin, Member) təyin edin.",
+          "fv.settingsb": [
+            "İstifadəçi dəvəti",
+            "Rol idarəetməsi",
+            "Təhlükəsizlik",
+          ],
           "fv.f6h": "Biznes sosial lenti",
-          "fv.f6p": "Şirkət xəbərləri, yeni məhsullar, layihə elanlarını paylaşın. Şərh yazın, reaksiya verin.",
+          "fv.f6p":
+            "Şirkət xəbərləri, yeni məhsullar, layihə elanlarını paylaşın. Şərh yazın, reaksiya verin.",
           "fv.b6": ["Post paylaşın", "Sorğular (Polls)", "Başqalarını izləyin"],
           "ds.lbl": "VEB PLATFORMA",
           "ds.h2": "Güclü iş paneli",
-          "ds.sub": "Qeydiyyatdan sonra tam funksional iş paneli sizin ixtiyarınızdadır. Bütün fəaliyyəti bir ekrandan idarə edin.",
+          "ds.sub":
+            "Qeydiyyatdan sonra tam funksional iş paneli sizin ixtiyarınızdadır. Bütün fəaliyyəti bir ekrandan idarə edin.",
           "ds.t1": "Ana lövhə",
           "ds.s1": "Modul",
           "ds.s2": "Pulsuz",
           "ds.s3": "Dil dəstəyi",
           "hw.lbl": "NECƏ İŞLƏYİR",
           "hw.h2": "5 addımda başlayın",
-          "hw.sub": "Qeydiyyatdan tutmuş ilk əməliyyatınıza qədər — asan və sürətli.",
+          "hw.sub":
+            "Qeydiyyatdan tutmuş ilk əməliyyatınıza qədər — asan və sürətli.",
           "hw.s1h": "Qeydiyyat",
           "hw.s1p": "Email ilə hesab açın.",
           "hw.s2h": "Şirkəti əlavə edin",
@@ -1401,7 +2029,8 @@
           "hw.s5p": "Biznesinizi genişləndirin.",
           "au.lbl": "KİMLƏR ÜÇÜN",
           "au.h2": "Hər kəs üçün nəzərdə tutulub",
-          "au.sub": "İstehsalçıdan distribyutora, tikinti şirkətindən xidmət provayderinə — platforma hər kəsə uyğundur.",
+          "au.sub":
+            "İstehsalçıdan distribyutora, tikinti şirkətindən xidmət provayderinə — platforma hər kəsə uyğundur.",
           "au.a1h": "İstehsalçılar",
           "au.a1p": "Məhsullarınızı geniş auditoriyaya çatdırın.",
           "au.a2h": "Təchizatçılar",
@@ -1409,7 +2038,8 @@
           "au.a3h": "Xidmət şirkətləri",
           "au.a3p": "Xidmətlərinizi tanıdın, layihələr qazanın.",
           "ct.h2": "Biznesiniz üçün yeni imkanlar açın",
-          "ct.sub": "Pulsuz qeydiyyatdan keçin və minlərlə şirkət arasında yerinizi alın. Platforma tamamilə pulsuzdur.",
+          "ct.sub":
+            "Pulsuz qeydiyyatdan keçin və minlərlə şirkət arasında yerinizi alın. Platforma tamamilə pulsuzdur.",
           "ct.btn": "Bizimlə əlaqə",
           "ft.tag": "B2B biznes əlaqələri üçün vahid platforma.",
           "ft.p": "Platforma",
@@ -1433,26 +2063,34 @@
           "nav.aud": "About",
           "nav.con": "Contact",
           "hero.badge": "🚀 B2B Platform — free registration",
-          "hero.title": "All your business connections <span style='color:#2563EB'>in one platform.</span>",
-          "hero.sub": "Showcase your company, find new partners, present your products and services, and grow together.",
+          "hero.title":
+            "All your business connections <span style='color:#2563EB'>in one platform.</span>",
+          "hero.sub":
+            "Showcase your company, find new partners, present your products and services, and grow together.",
           "hero.cl": [
             "Marketplace – products & services",
             "Messaging & Feed",
             "Stock & Tasks",
             "HR, Payroll & Team Management",
-            "Document management & tenders"
+            "Wiki, AI, Automation & Versioning",
           ],
           "hero.cta": "Free registration",
           "hero.plat": "Web, Android and iOS — coming soon",
           "hero.free": "Free",
           "fs.lbl": "PLATFORM",
           "fs.h2": "All your B2B needs in one place",
-          "fs.sub": "Everything you need to manage your business, find partners and grow.",
+          "fs.sub":
+            "Everything you need to manage your business, find partners and grow.",
           "fs.f1": "List products and services, find new customers.",
           "fs.h3": "Messaging",
           "fs.f3": "Connect directly with companies.",
           "fs.stock": "Stock Management",
           "fs.fstock": "Track inventory, warehouses and stock movements.",
+          "fs.wiki": "Wiki & AI",
+          "fs.fwiki": "Knowledge base, AI summaries and versioning.",
+          "fs.automation": "Automation",
+          "fs.fautomation":
+            "Build workflows with triggers, conditions, and actions.",
           "fs.tasks": "Tasks",
           "fs.ftasks": "Manage team tasks with Kanban boards.",
           "fs.hr": "HR Management",
@@ -1468,41 +2106,82 @@
           "fs.settings": "Settings",
           "fv.lbl": "SCREENSHOTS",
           "fv.h2": "Real interface, real features",
-          "fv.sub": "Explore every module of the platform through real screenshots.",
+          "fv.sub":
+            "Explore every module of the platform through real screenshots.",
+          "fv.wikih": "Knowledge Base, AI & Versioning",
+          "fv.wikip":
+            "Manage company documents, policies, and knowledge. Use AI to summarize documents (Summarize) and track the history of every change (Version History).",
+          "fv.wikib": ["AI Summarize", "Version History", "Linked to Task"],
+          "fv.autoh": "Automate your workflows",
+          "fv.autop":
+            "Automate repetitive tasks. Start processes with 'Triggers' and complete them with 'Actions' based on conditions. For example, auto-assign and send notifications when a task is created.",
+          "fv.autob": [
+            "Trigger on task created",
+            "Auto-assign users",
+            "In-app, Email & Slack notifications",
+          ],
           "fv.f1h": "Sell your products and services",
-          "fv.f1p": "List your products and services on the global B2B marketplace and receive direct offers from buyers.",
-          "fv.b1": ["Category search", "Set MOQ and price", "Receive RFQ directly"],
+          "fv.f1p":
+            "List your products and services on the global B2B marketplace and receive direct offers from buyers.",
+          "fv.b1": [
+            "Category search",
+            "Set MOQ and price",
+            "Receive RFQ directly",
+          ],
           "fv.f2h": "Real-time direct messaging",
           "fv.f2p": "Chat with companies, send documents, negotiate contracts.",
-          "fv.b2": ["Send files", "Internal & External chats", "Multiple conversations"],
+          "fv.b2": [
+            "Send files",
+            "Internal & External chats",
+            "Multiple conversations",
+          ],
           "fv.stockh": "Warehouse & Stock Movements",
-          "fv.stockp": "Track your products, warehouses, and stock movements in one place.",
-          "fv.stockb": ["Add new products", "Stock analytics", "Warehouse management"],
+          "fv.stockp":
+            "Track your products, warehouses, and stock movements in one place.",
+          "fv.stockb": [
+            "Add new products",
+            "Stock analytics",
+            "Warehouse management",
+          ],
           "fv.tasksh": "Manage tasks with Kanban",
-          "fv.tasksp": "Create boards for your team, move tasks across columns.",
-          "fv.tasksb": ["To Do, In Progress, Done", "Assign team members", "Analytics & Timeline"],
+          "fv.tasksp":
+            "Create boards for your team, move tasks across columns.",
+          "fv.tasksb": [
+            "To Do, In Progress, Done",
+            "Assign team members",
+            "Analytics & Timeline",
+          ],
           "fv.hrh": "HR & Leave Management",
           "fv.hrp": "Track employee leave balances, approve requests.",
-          "fv.hrb": ["Annual, Sick leaves", "Team calendar", "Employee profiles"],
+          "fv.hrb": [
+            "Annual, Sick leaves",
+            "Team calendar",
+            "Employee profiles",
+          ],
           "fv.payrollh": "Payroll & Payouts",
-          "fv.payrollp": "Configure payroll rules, calculate salaries and manage payouts.",
+          "fv.payrollp":
+            "Configure payroll rules, calculate salaries and manage payouts.",
           "fv.payrollb": ["Rule Sets", "Employee salaries", "Payroll Runs"],
           "fv.settingsh": "Team & Permissions",
-          "fv.settingsp": "Invite team members, assign roles (Owner, Admin, Member).",
+          "fv.settingsp":
+            "Invite team members, assign roles (Owner, Admin, Member).",
           "fv.settingsb": ["User invitations", "Role management", "Security"],
           "fv.f6h": "Business social feed",
-          "fv.f6p": "Share company news, new products, project announcements. Comment and react.",
+          "fv.f6p":
+            "Share company news, new products, project announcements. Comment and react.",
           "fv.b6": ["Share posts", "Polls", "Follow others"],
           "ds.lbl": "WEB PLATFORM",
           "ds.h2": "Powerful dashboard",
-          "ds.sub": "After registration a fully functional dashboard is at your disposal. Manage all activities from one screen.",
+          "ds.sub":
+            "After registration a fully functional dashboard is at your disposal. Manage all activities from one screen.",
           "ds.t1": "Home dashboard",
           "ds.s1": "Modules",
           "ds.s2": "Free",
           "ds.s3": "Languages",
           "hw.lbl": "HOW IT WORKS",
           "hw.h2": "Get started in 5 steps",
-          "hw.sub": "From registration to your first transaction — easy and fast.",
+          "hw.sub":
+            "From registration to your first transaction — easy and fast.",
           "hw.s1h": "Register",
           "hw.s1p": "Create an account with email.",
           "hw.s2h": "Add company",
@@ -1515,7 +2194,8 @@
           "hw.s5p": "Expand your business.",
           "au.lbl": "WHO IS IT FOR",
           "au.h2": "Built for every B2B company",
-          "au.sub": "From manufacturers to distributors, construction firms to service providers — the platform works for everyone.",
+          "au.sub":
+            "From manufacturers to distributors, construction firms to service providers — the platform works for everyone.",
           "au.a1h": "Manufacturers",
           "au.a1p": "Reach a wider audience with your products.",
           "au.a2h": "Suppliers",
@@ -1523,7 +2203,8 @@
           "au.a3h": "Service companies",
           "au.a3p": "Showcase services, win new projects.",
           "ct.h2": "Unlock new opportunities for your business",
-          "ct.sub": "Register for free and take your place among thousands of companies. Using the platform is completely free.",
+          "ct.sub":
+            "Register for free and take your place among thousands of companies. Using the platform is completely free.",
           "ct.btn": "Contact us",
           "ft.tag": "The unified platform for B2B business connections.",
           "ft.p": "Platform",
@@ -1559,7 +2240,7 @@
           const k = el.getAttribute("data-i18n");
           if (t[k] !== undefined && !Array.isArray(t[k])) el.innerHTML = t[k];
         });
-        
+
         // Checklist
         const cl = document.getElementById("cl");
         if (cl) {
@@ -1575,6 +2256,8 @@
 
         // Feature bullets
         const bmap = {
+          fvbWiki: "fv.wikib",
+          fvbAuto: "fv.autob",
           fvb1: "fv.b1",
           fvb2: "fv.b2",
           fvbStock: "fv.stockb",
@@ -1606,8 +2289,12 @@
       }
 
       function syncMl() {
-        document.getElementById("mlaz").classList.toggle("active", lang === "az");
-        document.getElementById("mlen").classList.toggle("active", lang === "en");
+        document
+          .getElementById("mlaz")
+          .classList.toggle("active", lang === "az");
+        document
+          .getElementById("mlen")
+          .classList.toggle("active", lang === "en");
       }
 
       window.addEventListener("resize", () => {
